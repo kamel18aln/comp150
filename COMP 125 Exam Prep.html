@@ -1,0 +1,1364 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>COMP 125 Exam Prep</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: sticky chapter rail on top, one readable column (~760px) per chapter; lessons → traps → quiz */
+:root{
+  --bg:#f3f5f8; --surface:#ffffff; --ink:#16202b; --muted:#5a6878; --line:#d9dfe7;
+  --accent:#1f5fd6; --accent-soft:#e3ecfb; --trap:#a8550a; --trap-soft:#fdf1e1;
+  --ok:#15803d; --ok-soft:#e3f4e8; --bad:#b91c1c; --bad-soft:#fbe5e5; --code-bg:#eef1f5;
+  --f-display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --f-body:"Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+  --f-mono:"JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0e131a; --surface:#161d27; --ink:#e6ebf1; --muted:#9aa8b8; --line:#263241;
+  --accent:#7aa7ff; --accent-soft:#1a2a45; --trap:#f0a64a; --trap-soft:#36270f;
+  --ok:#4ade80; --ok-soft:#123020; --bad:#f87171; --bad-soft:#3b1818; --code-bg:#1b2430; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0e131a; --surface:#161d27; --ink:#e6ebf1; --muted:#9aa8b8; --line:#263241;
+  --accent:#7aa7ff; --accent-soft:#1a2a45; --trap:#f0a64a; --trap-soft:#36270f;
+  --ok:#4ade80; --ok-soft:#123020; --bad:#f87171; --bad-soft:#3b1818; --code-bg:#1b2430; color-scheme:dark}
+
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.6}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface)}
+*{box-sizing:border-box}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;line-height:1.15;margin:0}
+h2{font-size:1.9rem;font-weight:800}
+h3{font-size:1.25rem;font-weight:600;margin-top:.4rem}
+p{margin:0}
+code,.mono{font-family:var(--f-mono);font-size:.88em}
+code{background:var(--code-bg);padding:.1em .35em;border-radius:4px}
+pre{font-family:var(--f-mono);font-size:.85rem;background:var(--code-bg);padding:14px 16px;border-radius:8px;overflow-x:auto;margin:0;line-height:1.5}
+a{color:var(--accent)}
+button{font:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--surface);border-bottom:1px solid var(--line);
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:10px}
+.top-inner{max-width:980px;margin:0 auto;display:flex;flex-direction:column;gap:8px}
+.brand{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.brand b{font-family:var(--f-display);font-weight:800;font-size:1.1rem}
+.brand span{color:var(--muted);font-size:.85rem}
+.tabs{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex:none;border:1px solid var(--line);background:transparent;color:var(--ink);border-radius:999px;padding:5px 13px;font-size:.88rem;white-space:nowrap;display:flex;gap:6px;align-items:center}
+.tab .n{font-family:var(--f-mono);font-size:.78rem;color:var(--muted)}
+.tab[aria-selected="true"]{background:var(--accent);border-color:var(--accent);color:var(--surface)}
+.tab[aria-selected="true"] .n{color:var(--surface);opacity:.8}
+.tab .dot{width:7px;height:7px;border-radius:50%;background:var(--ok)}
+
+main{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:28px 80px}
+.view{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
+.eyebrow{font-family:var(--f-mono);font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+.lead{font-size:1.08rem;color:var(--muted)}
+.big{background:var(--accent-soft);border-radius:10px;padding:16px 18px}
+.big b{color:var(--accent)}
+.lesson{display:flex;flex-direction:column;gap:12px}
+.lesson ul,.lesson ol{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:4px}
+.trap{border:1px solid var(--trap);background:var(--trap-soft);border-radius:10px;padding:14px 16px;display:flex;flex-direction:column;gap:6px}
+.trap .lbl,.note .lbl{font-family:var(--f-mono);font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--trap);font-weight:600}
+.trap ul{margin:0;padding-left:1.2em;display:flex;flex-direction:column;gap:4px}
+.note{border-left:3px solid var(--muted);padding:2px 0 2px 14px;color:var(--muted);font-size:.95rem}
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:.92rem;font-variant-numeric:tabular-nums}
+th,td{text-align:left;padding:8px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--f-mono);font-size:.75rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:600;background:var(--code-bg)}
+tr:last-child td{border-bottom:0}
+details.work{border:1px solid var(--line);border-radius:8px;background:var(--surface)}
+details.work summary{padding:10px 14px;cursor:pointer;font-weight:700}
+details.work > div{padding:0 14px 14px;display:flex;flex-direction:column;gap:10px}
+hr.sep{border:0;border-top:1px solid var(--line);margin:8px 0}
+
+/* plan */
+.plan{display:grid;gap:10px}
+.prow{display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:start;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 16px}
+.prow .t{font-family:var(--f-mono);font-size:.82rem;color:var(--muted);white-space:nowrap;padding-top:3px}
+.prow .w{min-width:0}
+.prow .w b{display:block}
+.prow .w span{color:var(--muted);font-size:.93rem}
+.pri{font-family:var(--f-mono);font-size:.72rem;padding:2px 8px;border-radius:999px;white-space:nowrap;margin-top:3px}
+.pri.hi{background:var(--bad-soft);color:var(--bad)}
+.pri.md{background:var(--trap-soft);color:var(--trap)}
+.pri.lo{background:var(--code-bg);color:var(--muted)}
+@media (max-width:520px){.prow{grid-template-columns:1fr auto}.prow .t{grid-column:1/-1;padding:0}}
+
+/* quiz */
+.quiz{display:flex;flex-direction:column;gap:14px}
+.qhead{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}
+.score{font-family:var(--f-mono);font-size:.9rem;color:var(--muted)}
+.q{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px;display:flex;flex-direction:column;gap:10px}
+.q .qt{font-weight:700}
+.q .qt .qn{font-family:var(--f-mono);color:var(--muted);font-weight:400;margin-right:6px}
+.opts{display:flex;flex-direction:column;gap:6px}
+.opt{text-align:left;border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:8px;padding:8px 12px;line-height:1.4}
+.opt:hover:not(:disabled){border-color:var(--accent)}
+.opt:disabled{cursor:default}
+.opt.right{background:var(--ok-soft);border-color:var(--ok);color:var(--ink)}
+.opt.wrong{background:var(--bad-soft);border-color:var(--bad);color:var(--ink)}
+.why{font-size:.93rem;border-left:3px solid var(--ok);padding-left:12px}
+.why.bad{border-color:var(--bad)}
+.btn{border:1px solid var(--accent);background:var(--accent);color:var(--surface);border-radius:8px;padding:8px 16px;font-weight:700}
+.btn.ghost{background:transparent;color:var(--accent)}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+
+/* tools */
+.tool{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:12px}
+.tool .prob{font-size:1.15rem}
+.tool input{font-family:var(--f-mono);font-size:1rem;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);width:12em;max-width:100%}
+.fb{font-size:.95rem}
+.fb.ok{color:var(--ok)} .fb.no{color:var(--bad)}
+.regs{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:8px}
+.reg{border:1px solid var(--line);border-radius:8px;padding:6px 10px;background:var(--bg);transition:background .25s}
+.reg small{display:block;font-family:var(--f-mono);font-size:.7rem;color:var(--muted);letter-spacing:.05em}
+.reg span{font-family:var(--f-mono);font-size:1rem}
+.reg.hot{background:var(--accent-soft);border-color:var(--accent)}
+.mem{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:6px}
+.cell{font-family:var(--f-mono);font-size:.82rem;border:1px solid var(--line);border-radius:6px;padding:4px 8px;background:var(--bg);display:flex;gap:8px}
+.cell i{font-style:normal;color:var(--muted)}
+.cell.hot{border-color:var(--accent);background:var(--accent-soft)}
+.cell.pc{box-shadow:inset 3px 0 0 var(--trap)}
+.stepmsg{min-height:3.2em;font-size:.97rem}
+.stepmsg .ph{font-family:var(--f-mono);font-size:.75rem;text-transform:uppercase;letter-spacing:.08em;color:var(--accent)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<header class="top">
+  <div class="top-inner">
+    <div class="brand"><b>COMP 125 Exam Prep</b><span>Principles of Computing · Chapters 1–7</span></div>
+    <nav class="tabs" id="tabs" role="tablist"></nav>
+  </div>
+</header>
+
+<main>
+
+<!-- ============ PLAN ============ -->
+<section class="view" id="v-plan" data-label="Tonight's plan">
+  <div class="eyebrow">Start here</div>
+  <h2>How to study this tonight</h2>
+  <p class="lead">Your OOP background covers most of Chapters 2 and 3 already. The points you can't fake are in Chapters 4 and 5: binary math, truth tables, and the fetch/decode/execute steps. Spend your time there and skim the definitions chapters.</p>
+
+  <div class="plan">
+    <div class="prow"><div class="t">40 min</div><div class="w"><b>Ch 4 · Binary, Boolean logic, gates</b><span>Conversions, two's complement, truth tables, sum-of-products, MUX vs decoder. Do the binary drill until you get 5 in a row.</span></div><div class="pri hi">most points</div></div>
+    <div class="prow"><div class="t">40 min</div><div class="w"><b>Ch 5 · Von Neumann machine</b><span>Memorize the fetch phase and LOAD/STORE/ADD steps. Run the simulator twice.</span></div><div class="pri hi">most points</div></div>
+    <div class="prow"><div class="t">30 min</div><div class="w"><b>Ch 3 · Efficiency</b><span>Best/worst cases, the data cleanup table, selection sort trace, Θ order ranking.</span></div><div class="pri hi">most points</div></div>
+    <div class="prow"><div class="t">25 min</div><div class="w"><b>Ch 6 · Assemblers and operating systems</b><span>Two-pass assembler and symbol table, the 5 OS jobs, OS generations.</span></div><div class="pri md">medium</div></div>
+    <div class="prow"><div class="t">25 min</div><div class="w"><b>Ch 7 · Networks</b><span>The 5 protocol layers and what each does, LAN vs WAN, ports, DNS, ARQ.</span></div><div class="pri md">medium</div></div>
+    <div class="prow"><div class="t">20 min</div><div class="w"><b>Ch 1 + 2 · Algorithms and history</b><span>The formal algorithm definition word for word, the 3 operation types, computer generations.</span></div><div class="pri lo">quick wins</div></div>
+    <div class="prow"><div class="t">30 min</div><div class="w"><b>Practice exam</b><span>25 random questions from all chapters. Reread the chapter for anything you miss.</span></div><div class="pri lo">finish</div></div>
+  </div>
+
+  <div class="trap">
+    <div class="lbl">How to use each chapter</div>
+    <ul>
+      <li>Read the "Big idea" box first. If you can explain it out loud, you understand the chapter.</li>
+      <li>Orange boxes are exam traps: places where the slides contain something easy to mix up.</li>
+      <li>Do the quiz at the bottom of each chapter. Your answers stay saved in this browser.</li>
+      <li>Your prof's questions will come from the slides, so where the slides and the real world disagree, I tell you what the slide says.</li>
+    </ul>
+  </div>
+
+  <h3>One-page cheat sheet</h3>
+  <div class="tbl"><table>
+    <tr><th>Topic</th><th>Remember this</th></tr>
+    <tr><td>Algorithm (formal)</td><td>Well-ordered collection of unambiguous and effectively computable operations that, when executed, produces a result and halts in a finite amount of time</td></tr>
+    <tr><td>3 operation types</td><td>Sequential · Conditional · Iterative</td></tr>
+    <tr><td>Generations</td><td>1 vacuum tubes · 2 transistors · 3 integrated circuits · 4 microprocessors/PCs · 5 parallel, mobile, cloud, AI</td></tr>
+    <tr><td>Growth order (slow → fast)</td><td>lg n &lt; n &lt; n² &lt; 2ⁿ</td></tr>
+    <tr><td>Seq search</td><td>best 1 · worst n · avg n/2 → Θ(n)</td></tr>
+    <tr><td>Binary search</td><td>needs sorted list · Θ(lg n)</td></tr>
+    <tr><td>Selection sort</td><td>n(n−1)/2 comparisons → Θ(n²) every case</td></tr>
+    <tr><td>Two's complement</td><td>flip all bits, add 1</td></tr>
+    <tr><td>MUX / Decoder</td><td>MUX: 2ᴺ inputs, N selectors, 1 output · Decoder: N inputs, 2ᴺ outputs</td></tr>
+    <tr><td>Memory size</td><td>MAR with N bits → 2ᴺ cells</td></tr>
+    <tr><td>Fetch phase</td><td>PC→MAR · FETCH · MDR→IR · PC+1→PC</td></tr>
+    <tr><td>OS jobs</td><td>receptionist · security guard · dispatcher · efficiency expert · traffic officer</td></tr>
+    <tr><td>Protocol stack (bottom → top)</td><td>Physical · Data Link · Network · Transport · Application ("Please Do Not Throw Apples")</td></tr>
+  </table></div>
+</section>
+
+<!-- ============ CH1 ============ -->
+<section class="view" id="v-ch1" data-label="Intro to CS" hidden>
+  <div class="eyebrow">Chapter 1</div>
+  <h2>An Introduction to Computer Science</h2>
+  <div class="big"><b>Big idea:</b> computer science is the study of <b>algorithms</b>, not of computers. If you can write an algorithm for a problem, you can automate it.</div>
+
+  <div class="lesson">
+    <h3>What computer science is (and isn't)</h3>
+    <p>The slides list three misconceptions. CS is <i>not</i> just the study of computers, <i>not</i> just writing programs, and <i>not</i> just the uses of computers. The official definition:</p>
+    <p><b>Computer science is the study of algorithms</b>, including their:</p>
+    <ul>
+      <li>formal and mathematical properties</li>
+      <li>hardware realizations (building machines that run them)</li>
+      <li>linguistic realizations (programming languages)</li>
+      <li>applications</li>
+    </ul>
+  </div>
+
+  <div class="lesson">
+    <h3>The formal definition of an algorithm</h3>
+    <p>Memorize this sentence. It shows up as a fill-in-the-blank or "which property is violated" question.</p>
+    <div class="big">An algorithm is a <b>well-ordered</b> collection of <b>unambiguous</b> and <b>effectively computable</b> operations that, when executed, <b>produces a result</b> and <b>halts in a finite amount of time</b>.</div>
+    <div class="tbl"><table>
+      <tr><th>Property</th><th>Meaning</th><th>Broken by</th></tr>
+      <tr><td>Well-ordered</td><td>After each step you always know which step is next</td><td>"Do steps in any order you like"</td></tr>
+      <tr><td>Unambiguous</td><td>The computing agent understands it without further explanation (a <b>primitive</b>)</td><td>"Go back and do it again" (do what?), "Start over" (from where?)</td></tr>
+      <tr><td>Effectively computable</td><td>The agent can actually do it</td><td>"Write out every digit of π", "divide by 0"</td></tr>
+      <tr><td>Produces a result</td><td>Observable output: a number, a new object, or a change in the environment</td><td>An algorithm with no output</td></tr>
+      <tr><td>Halts in finite time</td><td>It stops</td><td>An <b>infinite loop</b> (e.g. "Repeat steps 2–4 forever")</td></tr>
+    </table></div>
+    <p>The <b>computing agent</b> is whatever carries out the steps: a machine, robot, person, or thing.</p>
+  </div>
+
+  <div class="lesson">
+    <h3>Three kinds of operations</h3>
+    <ul>
+      <li><b>Sequential</b>: does one well-defined task. <code>Set x to 5</code></li>
+      <li><b>Conditional</b>: asks a question and picks the next step based on the answer. <code>if</code>/<code>else</code></li>
+      <li><b>Iterative</b>: loops back and repeats a block. <code>while</code></li>
+    </ul>
+    <p>These three are all you need to write any algorithm. You already know them from OOP.</p>
+    <p>Some problems are <b>unsolvable</b>, some solutions are <b>too slow</b>, and for some we <b>don't know a solution yet</b>.</p>
+  </div>
+
+  <div class="lesson">
+    <h3>The three revolutions</h3>
+    <div class="tbl"><table>
+      <tr><th>Revolution</th><th>What got automated</th><th>Technology</th></tr>
+      <tr><td>Industrial (18th–19th c.)</td><td>Physical work</td><td>Machines, mechanical automation</td></tr>
+      <tr><td>Computer (20th c.)</td><td>Information and calculations</td><td>Algorithms + computer hardware</td></tr>
+      <tr><td>AI (21st c.)</td><td>Tasks that need intelligence</td><td>Data + algorithms + computing + machine learning</td></tr>
+    </table></div>
+    <p><b>Traditional computing:</b> human writes the rules → computer executes them.<br><b>Machine learning:</b> human gives data + a learning method → computer learns patterns.<br><b>Generative AI:</b> big models learn from massive datasets → generate new content from prompts.</p>
+  </div>
+
+  <div class="lesson">
+    <h3>History timeline</h3>
+    <div class="tbl"><table>
+      <tr><th>When</th><th>Who / what</th><th>Why it matters</th></tr>
+      <tr><td>1614</td><td>John Napier – logarithms</td><td>Simplified hard math</td></tr>
+      <tr><td>~1622</td><td>Slide rule</td><td></td></tr>
+      <tr><td>1642</td><td>Blaise Pascal – Pascaline</td><td>Mechanical calculator</td></tr>
+      <tr><td>1673</td><td>Leibnitz – Leibnitz's Wheel</td><td>Mechanical calculator</td></tr>
+      <tr><td>1801</td><td>Joseph Jacquard – loom with punched cards</td><td>First "programmable" device. <b>Luddites</b> opposed it</td></tr>
+      <tr><td>1823</td><td>Charles Babbage – Difference Engine</td><td>+ − × ÷ to 6 significant digits, polynomials</td></tr>
+      <tr><td>—</td><td>Babbage – Analytical Engine (never built)</td><td>Mill = ALU, Store = memory, Operator = processor, Output unit = I/O</td></tr>
+      <tr><td>1880s</td><td>Herman Hollerith – punched-card machines for the US Census</td><td>His company became <b>IBM</b> (1924)</td></tr>
+      <tr><td>1943</td><td>Colossus</td><td>Slide says: built by Alan Turing for the British Enigma project</td></tr>
+      <tr><td>1944</td><td>Mark I</td><td>Electromechanical: relays, magnets, gears</td></tr>
+      <tr><td>1946</td><td>ENIAC</td><td>First publicly known <b>fully electronic</b> computer</td></tr>
+      <tr><td>1949</td><td>EDVAC (Von Neumann)</td><td>One of the first <b>stored program</b> computers. UNIVAC I = first commercially sold</td></tr>
+    </table></div>
+    <p><b>Before 1940, 17th-century devices</b> could represent numbers and do arithmetic but had <b>no memory</b> and were <b>not programmable</b>. <b>19th-century devices</b> were mechanical (not electrical) but had memory and were programmable.</p>
+    <div class="tbl"><table>
+      <tr><th>Generation</th><th>Years</th><th>Key technology / feature</th></tr>
+      <tr><td>1st</td><td>1950–57</td><td>Vacuum tubes. Large, expensive, delicate</td></tr>
+      <tr><td>2nd</td><td>1957–65</td><td>Transistors + magnetic cores. FORTRAN and COBOL</td></tr>
+      <tr><td>3rd</td><td>1965–75</td><td>Integrated circuits. Minicomputers. Birth of the software industry</td></tr>
+      <tr><td>4th</td><td>1975–85</td><td>Microcomputers (desktop). Networks, email, GUIs, embedded systems</td></tr>
+      <tr><td>5th</td><td>1985–?</td><td>Massively parallel, handheld, wireless, cloud, ubiquitous computing, AI</td></tr>
+    </table></div>
+  </div>
+
+  <div class="trap"><div class="lbl">Exam traps</div><ul>
+    <li>ENIAC = first <i>fully electronic</i>. Mark I = <i>electromechanical</i>. EDVAC = first <i>stored program</i>. UNIVAC I = first <i>commercially sold</i>.</li>
+    <li>Babbage <i>built</i> the Difference Engine but only <i>designed</i> the Analytical Engine.</li>
+    <li>"Nearly all modern computers use the Von Neumann architecture."</li>
+  </ul></div>
+
+  <div class="quiz" data-ch="ch1"></div>
+</section>
+
+<!-- ============ CH2 ============ -->
+<section class="view" id="v-ch2" data-label="Algorithm design" hidden>
+  <div class="eyebrow">Chapter 2</div>
+  <h2>Algorithm Discovery and Design</h2>
+  <div class="big"><b>Big idea:</b> write algorithms in <b>pseudocode</b> using only three building blocks: sequential, conditional, and iterative operations. This is the chapter where OOP helps you most.</div>
+
+  <div class="lesson">
+    <h3>Ways to write an algorithm</h3>
+    <div class="tbl"><table>
+      <tr><th>Method</th><th>Good</th><th>Bad</th></tr>
+      <tr><td>Natural language (English)</td><td>Expressive, easy to use</td><td>Verbose, unstructured, ambiguous</td></tr>
+      <tr><td>Programming language</td><td>Structured, made for computers</td><td>Grammatically fussy, cryptic</td></tr>
+      <tr><td><b>Pseudocode</b></td><td>In between: structured but readable. Used to design before coding</td><td>Doesn't run on a computer</td></tr>
+    </table></div>
+  </div>
+
+  <div class="lesson">
+    <h3>The three operation types</h3>
+    <p><b>1. Sequential:</b> does one task. Three basic kinds:</p>
+    <ul>
+      <li><b>Computation</b>: <code>Set the value of x to (a + b)</code></li>
+      <li><b>Input</b>: <code>Get values for gallons, start, end</code></li>
+      <li><b>Output</b>: <code>Print the value of mpg</code></li>
+    </ul>
+    <p>A <b>variable</b> is a named storage location that holds a value. A <b>sequential algorithm</b> uses only sequential operations (like the miles-per-gallon example).</p>
+    <p><b>2. Conditional</b> (a "control operation", because it changes the normal flow): evaluate a true/false condition. If true, do the first set and skip the second. If false, skip the first and do the second.</p>
+    <p><b>3. Iterative</b>: repeat a block.</p>
+    <ul>
+      <li><b>While loop (pretest)</b>: checks the <b>continuation condition</b> first, then runs the <b>loop body</b>. Body might run 0 times.</li>
+      <li><b>Do/while (posttest)</b>: condition at the end, so the body <b>always runs at least once</b>.</li>
+    </ul>
+<pre>Computation:   Set the value of "variable" to "arithmetic expression"
+Input/Output:  Get a value for "variable"... / Print the value of "variable"
+Conditional:   If "condition" then
+                   first set of operations
+               Else
+                   second set of operations
+Iterative:     While ("condition") do
+                   operations
+               End of the loop
+
+               Do
+                   operations
+               While ("condition")</pre>
+  </div>
+
+  <div class="lesson">
+    <h3>Abstraction and top-down design</h3>
+    <ul>
+      <li><b>Abstraction</b>: separate the high-level view of something from its low-level details. You use "find the largest" without thinking about how.</li>
+      <li><b>Top-down design</b>: break a big problem into smaller subproblems, then refine each one until every step is a primitive. The multiply example below does exactly this: steps marked * "need elaboration" until they're concrete.</li>
+    </ul>
+  </div>
+
+  <div class="lesson">
+    <h3>Example 1: multiply by repeated addition</h3>
+    <p>Compute a × b by adding a to itself b times.</p>
+<pre>Get values for a and b
+If (either a = 0 or b = 0) then
+    Set the value of product to 0
+Else
+    Set the value of count to 0
+    Set the value of product to 0
+    While (count &lt; b) do
+        Set the value of product to (product + a)
+        Set the value of count to (count + 1)
+    End of loop
+Print the value of product
+Stop</pre>
+    <details class="work"><summary>Trace it with a = 4, b = 3</summary><div>
+      <div class="tbl"><table>
+        <tr><th>Check</th><th>count</th><th>product</th></tr>
+        <tr><td>start</td><td>0</td><td>0</td></tr>
+        <tr><td>0 &lt; 3 ✓</td><td>1</td><td>4</td></tr>
+        <tr><td>1 &lt; 3 ✓</td><td>2</td><td>8</td></tr>
+        <tr><td>2 &lt; 3 ✓</td><td>3</td><td>12</td></tr>
+        <tr><td>3 &lt; 3 ✗ stop</td><td>3</td><td><b>12</b></td></tr>
+      </table></div>
+      <p>The loop body ran 3 times (= b). The condition was checked 4 times.</p>
+    </div></details>
+  </div>
+
+  <div class="lesson">
+    <h3>Example 2: sequential search</h3>
+    <p>10,000 names N₁…N₁₀₀₀₀ with phone numbers T₁…T₁₀₀₀₀, unsorted. Find NAME's number.</p>
+<pre>Get values for NAME, N1..Nn, T1..Tn
+Set the value of i to 1 and Found to NO
+While (Found = NO and i &lt;= n) do
+    If NAME = Ni then
+        Print Ti
+        Set Found to YES
+    Else
+        Set i to (i + 1)
+End of loop
+If (Found = NO) then Print "Sorry, this name is not in the directory"
+Stop</pre>
+    <p>Note the loop has <b>two</b> exit conditions: found it, or ran off the end of the list. Forgetting the second one creates an infinite loop.</p>
+  </div>
+
+  <div class="lesson">
+    <h3>Example 3: find the largest</h3>
+<pre>Get values for n and A1..An
+Set largest so far to A1, location to 1, i to 2
+While (i &lt;= n) do
+    If Ai &gt; largest so far then
+        Set largest so far to Ai
+        Set location to i
+    Set i to (i + 1)
+End of loop
+Print largest so far and location</pre>
+  </div>
+
+  <div class="lesson">
+    <h3>Example 4: pattern matching</h3>
+    <p>Find every place pattern P (length m) appears in text T (length n). Line P up at position 1 of T, compare character by character. On a full match, report the position. Either way, slide P one position right and repeat, until P runs off the end of T (last start position is n − m + 1).</p>
+  </div>
+
+  <div class="trap"><div class="lbl">Exam traps</div><ul>
+    <li>While = pretest (may run 0 times). Do/while = posttest (runs at least once).</li>
+    <li>Input and output count as <i>sequential</i> operations, not a separate category.</li>
+    <li>Be ready to label any pseudocode line as sequential, conditional, or iterative.</li>
+  </ul></div>
+
+  <div class="quiz" data-ch="ch2"></div>
+</section>
+
+<!-- ============ CH3 ============ -->
+<section class="view" id="v-ch3" data-label="Efficiency" hidden>
+  <div class="eyebrow">Chapter 3</div>
+  <h2>The Efficiency of Algorithms</h2>
+  <div class="big"><b>Big idea:</b> we compare algorithms by how their <b>work grows as the input size n grows</b>. Θ(lg n) is great, Θ(n) is fine, Θ(n²) gets slow, Θ(2ⁿ) is hopeless.</div>
+
+  <div class="lesson">
+    <h3>Attributes of a good algorithm</h3>
+    <ul>
+      <li><b>Correctness</b>: is the problem specified correctly, and does it always give the right answer?</li>
+      <li><b>Ease of understanding</b>: can someone else read it? Helps checking and maintenance.</li>
+      <li><b>Elegance</b>: a clever, non-obvious approach. Example: Gauss summing 1+2+…+100 as 50 × 101 = 5050.</li>
+      <li><b>Efficiency</b>: use of time and space.</li>
+    </ul>
+    <p>Attributes can <b>conflict</b> (elegance vs. ease of understanding) or <b>reinforce</b> each other (ease of understanding helps correctness).</p>
+    <p>Timing with a stopwatch isn't reliable because machine speed and input size confuse the result. <b>Benchmarking</b> = timing on standard data sets. Instead we count the <b>central unit of work</b>: the most important, most frequent operation (usually comparisons).</p>
+  </div>
+
+  <div class="lesson">
+    <h3>Sequential search</h3>
+    <div class="tbl"><table>
+      <tr><th>Best</th><th>Worst</th><th>Average</th></tr>
+      <tr><td>1 (first item)</td><td>n (last item or not there)</td><td>n/2</td></tr>
+    </table></div>
+    <p>All of these grow linearly: <b>Θ(n)</b>. Double n, double the work.</p>
+  </div>
+
+  <div class="lesson">
+    <h3>Selection sort</h3>
+    <p>Each pass: find the <b>largest</b> value in the unsorted part, <b>swap</b> it with the last unsorted item, move the marker left one.</p>
+    <details class="work" open><summary>Trace: [5, 1, 3, 9, 4]</summary><div>
+      <div class="tbl"><table>
+        <tr><th>Pass</th><th>Largest in unsorted part</th><th>Swap with</th><th>Result</th></tr>
+        <tr><td>1</td><td>9</td><td>4</td><td class="mono">[5, 1, 3, 4 | 9]</td></tr>
+        <tr><td>2</td><td>5</td><td>4</td><td class="mono">[4, 1, 3 | 5, 9]</td></tr>
+        <tr><td>3</td><td>4</td><td>3</td><td class="mono">[3, 1 | 4, 5, 9]</td></tr>
+        <tr><td>4</td><td>3</td><td>1</td><td class="mono">[1 | 3, 4, 5, 9]</td></tr>
+      </table></div>
+    </div></details>
+    <p>Comparisons: (n−1) + (n−2) + … + 1 = <b>n(n−1)/2</b>. Same in every case, because it always scans the whole unsorted part. That's <b>Θ(n²)</b>.</p>
+    <div class="tbl"><table>
+      <tr><th>n</th><th>n²</th><th>Comparisons n(n−1)/2</th></tr>
+      <tr><td>10</td><td>100</td><td>45</td></tr>
+      <tr><td>100</td><td>10,000</td><td>4,950</td></tr>
+      <tr><td>1,000</td><td>1,000,000</td><td>499,500</td></tr>
+    </table></div>
+    <p>Key fact: <b>eventually every Θ(n²) function is bigger than any Θ(n) function</b>. Algorithm A = 0.0001n² vs B = 100n: A is faster for small n, they tie at n = 1,000,000, and B wins after that.</p>
+  </div>
+
+  <div class="lesson">
+    <h3>Data cleanup: remove the zeros</h3>
+    <p>Three algorithms for the same problem. Example data: <code>[55, 0, 32, 19, 0, 27]</code></p>
+    <ul>
+      <li><b>Shuffle-left</b>: scan left to right. On each 0, shift everything to its right one cell left. → <code>[55, 32, 19, 27, 27, 27]</code>, legit count = 4.</li>
+      <li><b>Copy-over</b>: make a new empty list. Copy every nonzero value into it. → <code>[55, 32, 19, 27]</code></li>
+      <li><b>Converging-pointers</b>: left pointer scans right. When it finds a 0, copy the value at the right pointer onto it and move the right pointer left. Stop when they cross. (Changes the order of the data.)</li>
+    </ul>
+    <div class="tbl"><table>
+      <tr><th></th><th>Shuffle-left</th><th>Copy-over</th><th>Converging-pointers</th></tr>
+      <tr><td>Best time</td><td>Θ(n) (no zeros)</td><td>Θ(n)</td><td>Θ(n)</td></tr>
+      <tr><td>Worst time</td><td><b>Θ(n²)</b> (all zeros)</td><td>Θ(n)</td><td>Θ(n)</td></tr>
+      <tr><td>Space</td><td>n (no extra)</td><td><b>up to 2n</b> (no zeros = worst)</td><td>n (no extra)</td></tr>
+    </table></div>
+    <p>This is the textbook <b>time/space tradeoff</b>: copy-over is fast but uses extra memory. Shuffle-left saves memory but can be slow. Converging-pointers gets both, at the cost of reordering the data.</p>
+  </div>
+
+  <div class="trap"><div class="lbl">Slide typo</div><ul>
+    <li>The summary table (Fig 3.22) on your slides shows copy-over as Θ(n²) in the worst case. The analysis slide right before it says Θ(n) in best and worst case, which is correct. Copy-over only looks at each item once. Answer <b>Θ(n)</b>.</li>
+  </ul></div>
+
+  <div class="lesson">
+    <h3>Binary search</h3>
+    <p><b>Requires a sorted list.</b> Look at the middle. If target is smaller, throw away the right half; if larger, throw away the left half. Repeat.</p>
+    <ul>
+      <li>Best: 1 comparison (it's the first middle value)</li>
+      <li>Worst: as many times as you can halve n → <b>Θ(lg n)</b></li>
+    </ul>
+    <p>lg n means log base 2. lg 1,024 = 10, lg 1,000,000 ≈ 20. So searching a million sorted items takes about 20 comparisons instead of up to a million.</p>
+  </div>
+
+  <div class="lesson">
+    <h3>Pattern matching (forward march)</h3>
+    <ul>
+      <li>Best: first letter of pattern never appears in text. Pattern "xyz", text "aaaa…" → <b>Θ(n)</b></li>
+      <li>Worst: all but the last letter match every time. Pattern "aab", text "aaaa…" → <b>Θ(m × n)</b></li>
+    </ul>
+  </div>
+
+  <div class="lesson">
+    <h3>When things get out of hand</h3>
+    <ul>
+      <li><b>Polynomially bounded</b>: work is Θ(nᵏ). Most everyday problems.</li>
+      <li><b>Exponential</b>: Θ(2ⁿ).</li>
+      <li><b>Intractable</b>: no polynomially bounded solution known. Examples: <b>Hamiltonian circuit</b> (visit every vertex exactly once and return to start), <b>traveling salesperson</b>, <b>bin packing</b>, <b>chess</b>.</li>
+      <li>Hamiltonian circuit brute force: a tree of choices with 2 choices per vertex → <b>2ⁿ</b> paths.</li>
+      <li><b>Approximation algorithms</b> give a good-enough (suboptimal) answer to intractable problems. Bin packing: put each box into the first bin it fits; if none fit, open a new bin.</li>
+    </ul>
+    <div class="tbl"><table>
+      <tr><th>Order</th><th>n = 10</th><th>n = 50</th><th>n = 100</th><th>n = 1,000</th></tr>
+      <tr><td>lg n</td><td>0.0003 s</td><td>0.0006 s</td><td>0.0007 s</td><td>0.001 s</td></tr>
+      <tr><td>n</td><td>0.001 s</td><td>0.005 s</td><td>0.01 s</td><td>0.1 s</td></tr>
+      <tr><td>n²</td><td>0.01 s</td><td>0.25 s</td><td>1 s</td><td>1.67 min</td></tr>
+      <tr><td>2ⁿ</td><td>0.1024 s</td><td>3,570 years</td><td>4×10¹⁶ centuries</td><td>too big</td></tr>
+    </table></div>
+  </div>
+
+  <div class="tbl"><table>
+    <tr><th>Algorithm</th><th>Best</th><th>Worst</th><th>Average</th></tr>
+    <tr><td>Sequential search</td><td>1</td><td>Θ(n)</td><td>Θ(n)</td></tr>
+    <tr><td>Binary search</td><td>1</td><td>Θ(lg n)</td><td>Θ(lg n)</td></tr>
+    <tr><td>Selection sort</td><td>Θ(n²)</td><td>Θ(n²)</td><td>Θ(n²)</td></tr>
+    <tr><td>Shuffle-left</td><td>Θ(n)</td><td>Θ(n²)</td><td>Θ(n²)</td></tr>
+    <tr><td>Copy-over</td><td>Θ(n)</td><td>Θ(n)</td><td>Θ(n)</td></tr>
+    <tr><td>Converging-pointers</td><td>Θ(n)</td><td>Θ(n)</td><td>Θ(n)</td></tr>
+    <tr><td>Pattern matching</td><td>Θ(n)</td><td>Θ(m × n)</td><td></td></tr>
+  </table></div>
+
+  <div class="trap"><div class="lbl">Exam traps</div><ul>
+    <li>Binary search <i>only</i> works on sorted data. If a question says "unsorted list", the answer is sequential search.</li>
+    <li>Selection sort has the same work in best and worst case. Don't say "best case Θ(n)".</li>
+    <li>Copy-over's <i>worst</i> space case is when there are <i>no</i> zeros (it copies everything).</li>
+    <li>Shuffle-left's worst time case is when <i>every</i> value is zero.</li>
+  </ul></div>
+
+  <div class="quiz" data-ch="ch3"></div>
+</section>
+
+<!-- ============ CH4 ============ -->
+<section class="view" id="v-ch4" data-label="Binary & gates" hidden>
+  <div class="eyebrow">Chapter 4</div>
+  <h2>Binary Numbers, Boolean Logic, and Gates</h2>
+  <div class="big"><b>Big idea:</b> everything inside a computer is 0s and 1s, because two-state ("bistable") electronics are reliable. 1/0 maps onto true/false, true/false maps onto gates, and gates combine into circuits that add, compare, and make decisions.</div>
+
+  <div class="lesson">
+    <h3>Binary ↔ decimal</h3>
+    <p>Each binary place is a power of 2: … 32 16 8 4 2 1.</p>
+    <p><b>Binary → decimal:</b> add up the place values that have a 1.<br><code>1101</code> = 8 + 4 + 0 + 1 = <b>13</b></p>
+    <p><b>Decimal → binary:</b> divide by 2 repeatedly, write the remainders, read them <b>bottom to top</b>.</p>
+<pre>11 ÷ 2 = 5  r 1   ↑
+ 5 ÷ 2 = 2  r 1   |  read upward
+ 2 ÷ 2 = 1  r 0   |
+ 1 ÷ 2 = 0  r 1   |
+11 = 1011</pre>
+    <p>Shortcut: subtract the biggest power of 2 that fits. 45 = 32 + 8 + 4 + 1 → <code>101101</code>.</p>
+  </div>
+
+  <div class="lesson">
+    <h3>Binary addition and overflow</h3>
+    <p>0+0=0, 0+1=1, 1+0=1, <b>1+1=10</b> (write 0, carry 1). 1+1+1 = 11 (write 1, carry 1).</p>
+<pre>  0101   (5)
++ 0011   (3)
+------
+  1000   (8)</pre>
+    <p>Computers use fixed-length numbers. 4 bits holds 0–15. 14 + 2 = 16 doesn't fit in 4 bits: that's <b>arithmetic overflow</b>.</p>
+  </div>
+
+  <div class="lesson">
+    <h3>Negative numbers</h3>
+    <p><b>Sign/magnitude:</b> leftmost bit is the sign (0 = +, 1 = −), rest is the value. +5 = <code>0101</code>, −5 = <code>1101</code>. Problem: <b>two zeros</b>, <code>0000</code> and <code>1000</code>.</p>
+    <p><b>Two's complement:</b> to negate, <b>flip every bit, then add 1</b>.</p>
+<pre>+5      = 0101
+flip    = 1010
+add 1   = 1011  → −5
+
++0      = 0000
+flip    = 1111
+add 1   = 0000  (carry falls off) → only one zero</pre>
+    <p>Quick check: in 4-bit two's complement the leftmost bit is worth −8. So <code>1011</code> = −8 + 2 + 1 = −5. Range is −8 to +7.</p>
+  </div>
+
+  <div class="lesson">
+    <h3>Other data types</h3>
+    <ul>
+      <li><b>Floating point</b>: binary scientific notation. 3.25₁₀ = 11.01₂ = 1.101 × 2¹</li>
+      <li><b>Text</b>: <b>ASCII</b> uses 8 bits per character. <b>Unicode</b> uses at least 16 bits (covers all languages).</li>
+      <li><b>Sound</b>: a wave has <b>amplitude</b> (height), <b>period</b> (time to repeat), <b>frequency</b> (cycles per second). Digitize by <b>sampling</b>. Quality depends on <b>sampling rate</b> (samples/second) and <b>bit depth</b> (bits per sample).</li>
+      <li><b>Images</b>: sample a grid of <b>pixels</b>. <b>RGB</b> uses 1 byte each for red, green, blue = 24 bits per pixel. <b>Raster graphics</b> store the 2D grid.</li>
+      <li><b>Compression</b>: <b>lossless</b> = can restore perfectly (zip). <b>Lossy</b> = some detail is lost (JPEG, MP3).</li>
+      <li><b>Variable-length codes</b>: common letters get short codes, rare letters get long ones (A = 00, L = 1111111), so total size shrinks.</li>
+    </ul>
+    <details class="work"><summary>Worked: how much space? (the slide's 4 questions)</summary><div>
+      <div class="tbl"><table>
+        <tr><th>Data</th><th>Assumption</th><th>Size</th></tr>
+        <tr><td>1,000 integers</td><td>32 bits (4 bytes) each</td><td>32,000 bits = 4,000 bytes</td></tr>
+        <tr><td>10-page paper</td><td>~3,000 chars/page, 8-bit ASCII</td><td>30,000 bytes</td></tr>
+        <tr><td>60 s of sound</td><td>44,100 samples/s × 16 bits</td><td>44,100 × 16 × 60 = 42,336,000 bits ≈ 5.3 MB</td></tr>
+        <tr><td>640 × 480 image</td><td>24-bit RGB</td><td>307,200 pixels × 3 bytes = 921,600 bytes</td></tr>
+      </table></div>
+      <p>The method: (number of items) × (bits per item). Divide by 8 for bytes.</p>
+    </div></details>
+  </div>
+
+  <div class="tool" id="bindrill">
+    <div class="row" style="justify-content:space-between"><h3 style="margin:0">Binary drill</h3><span class="score" id="bd-streak">streak 0</span></div>
+    <div class="prob" id="bd-prob"></div>
+    <form class="row" id="bd-form"><input id="bd-in" autocomplete="off" inputmode="text" aria-label="Your answer"><button class="btn" type="submit">Check</button><button class="btn ghost" type="button" id="bd-skip">New problem</button></form>
+    <div class="fb" id="bd-fb"></div>
+  </div>
+
+  <div class="lesson">
+    <h3>Boolean logic and gates</h3>
+    <p>AND is written <code>a · b</code>, OR is <code>a + b</code>, NOT is <code>~a</code> (or ā).</p>
+    <div class="tbl"><table>
+      <tr><th>a</th><th>b</th><th>a AND b</th><th>a OR b</th><th>NOT a</th></tr>
+      <tr><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td></tr>
+      <tr><td>0</td><td>1</td><td>0</td><td>1</td><td>1</td></tr>
+      <tr><td>1</td><td>0</td><td>0</td><td>1</td><td>0</td></tr>
+      <tr><td>1</td><td>1</td><td>1</td><td>1</td><td>0</td></tr>
+    </table></div>
+    <p>A <b>gate</b> is an electronic device that does one Boolean operator. Gates are built from <b>transistors</b> (tiny solid-state switches):</p>
+    <ul><li>NOT: 1 transistor</li><li>NAND, NOR: 2 transistors</li><li>AND, OR: 3 transistors (that's NAND/NOR + a NOT)</li></ul>
+    <p>A truth table with n inputs has <b>2ⁿ rows</b>.</p>
+  </div>
+
+  <div class="lesson">
+    <h3>Circuits and the sum-of-products algorithm</h3>
+    <p>A <b>circuit</b> has input wires, gates, and output wires. Its output depends only on current inputs (it has no memory, "no state").</p>
+    <p><b>Sum-of-products</b> turns a truth table into a circuit:</p>
+    <ol>
+      <li>Write the truth table.</li>
+      <li>Find every row where the output is <b>1</b>.</li>
+      <li>For each of those rows, build an AND term: use the input as-is if it's 1, use NOT of it if it's 0.</li>
+      <li>OR all those terms together.</li>
+      <li>Draw it: NOT gates, then AND gates, then one OR gate.</li>
+    </ol>
+    <details class="work" open><summary>Worked: 1-bit compare-for-equality (1-CE)</summary><div>
+      <div class="tbl"><table>
+        <tr><th>a</th><th>b</th><th>output (a = b?)</th><th>term</th></tr>
+        <tr><td>0</td><td>0</td><td><b>1</b></td><td>~a · ~b</td></tr>
+        <tr><td>0</td><td>1</td><td>0</td><td></td></tr>
+        <tr><td>1</td><td>0</td><td>0</td><td></td></tr>
+        <tr><td>1</td><td>1</td><td><b>1</b></td><td>a · b</td></tr>
+      </table></div>
+      <p>OR the terms: <b>(a · b) + (~a · ~b)</b></p>
+      <p><b>N-bit CE:</b> run a 1-CE on each pair of bits (a₀ with b₀, a₁ with b₁, …) and <b>AND</b> all the results. Equal only if every bit pair is equal.</p>
+    </div></details>
+    <details class="work"><summary>Worked: 1-bit adder (1-ADD)</summary><div>
+      <p>Inputs: aᵢ, bᵢ, and carry-in cᵢ. Outputs: sum sᵢ and carry-out cᵢ₊₁.</p>
+      <div class="tbl"><table>
+        <tr><th>a</th><th>b</th><th>c</th><th>sum</th><th>carry out</th></tr>
+        <tr><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+        <tr><td>0</td><td>0</td><td>1</td><td>1</td><td>0</td></tr>
+        <tr><td>0</td><td>1</td><td>0</td><td>1</td><td>0</td></tr>
+        <tr><td>0</td><td>1</td><td>1</td><td>0</td><td>1</td></tr>
+        <tr><td>1</td><td>0</td><td>0</td><td>1</td><td>0</td></tr>
+        <tr><td>1</td><td>0</td><td>1</td><td>0</td><td>1</td></tr>
+        <tr><td>1</td><td>1</td><td>0</td><td>0</td><td>1</td></tr>
+        <tr><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td></tr>
+      </table></div>
+      <p>Sum = (~a·~b·c) + (~a·b·~c) + (a·~b·~c) + (a·b·c)<br>Carry = (~a·b·c) + (a·~b·c) + (a·b·~c) + (a·b·c)</p>
+      <p><b>N-bit adder:</b> chain N 1-ADDs. The first gets carry-in c₀ = 0. Each carry-out feeds the next box's carry-in (ripple-carry).</p>
+    </div></details>
+  </div>
+
+  <div class="lesson">
+    <h3>Control circuits</h3>
+    <div class="tbl"><table>
+      <tr><th></th><th>Multiplexer (MUX)</th><th>Decoder</th></tr>
+      <tr><td>Inputs</td><td>2ᴺ data lines + N selector lines</td><td>N input lines</td></tr>
+      <tr><td>Outputs</td><td>1</td><td>2ᴺ</td></tr>
+      <tr><td>Job</td><td>Picks one input and passes its value to the output</td><td>Turns on exactly one output line (1), all others 0</td></tr>
+      <tr><td>Used for</td><td>Choosing one data value (e.g. picking the ALU result)</td><td>Picking which instruction/circuit to activate, picking a memory cell</td></tr>
+    </table></div>
+    <p>Memory hook: <b>MUX = many in, one out</b>. <b>Decoder = few in, many out</b>.</p>
+  </div>
+
+  <div class="trap"><div class="lbl">Exam traps</div><ul>
+    <li>Decimal→binary remainders are read <b>bottom to top</b>.</li>
+    <li>Two's complement is flip <i>and add 1</i>. Flipping alone is "one's complement".</li>
+    <li>Sign/magnitude's weakness is two representations of zero.</li>
+    <li>MUX with 3 selector lines → 8 inputs. Decoder with 3 inputs → 8 outputs.</li>
+    <li>In sum-of-products, only the rows where output = 1 matter.</li>
+  </ul></div>
+
+  <div class="quiz" data-ch="ch4"></div>
+</section>
+
+<!-- ============ CH5 ============ -->
+<section class="view" id="v-ch5" data-label="Computer organization" hidden>
+  <div class="eyebrow">Chapter 5</div>
+  <h2>Computer Systems Organization</h2>
+  <div class="big"><b>Big idea:</b> the <b>Von Neumann architecture</b> has four parts (memory, I/O, ALU, control unit), stores the program in memory, and runs instructions one at a time in a loop: <b>fetch → decode → execute</b>.</div>
+
+  <div class="lesson">
+    <h3>The four subsystems</h3>
+    <ol>
+      <li><b>Memory</b>: stores data and the program</li>
+      <li><b>Input/Output</b>: talks to the outside world</li>
+      <li><b>Arithmetic/Logic Unit (ALU)</b>: does the math and comparisons</li>
+      <li><b>Control unit</b>: fetches, decodes, executes instructions</li>
+    </ol>
+    <p>ALU + control unit = the <b>CPU</b>. Other key traits: the <b>stored program</b> concept (programs are binary data in memory) and <b>sequential execution</b> (one instruction at a time unless told to jump).</p>
+  </div>
+
+  <div class="lesson">
+    <h3>Memory</h3>
+    <ul>
+      <li><b>RAM</b>: cells, each with a unique <b>address</b>. Any cell takes the same time to reach. Cells can be read and changed.</li>
+      <li><b>ROM</b>: prerecorded, can't be changed.</li>
+      <li>Cell size is usually <b>8 bits</b>. Address length N bits → max memory = <b>2ᴺ cells</b> (N=16 → 65,536; N=32 → 4,294,967,296).</li>
+      <li><b>Fetch</b> = read, <b>nondestructive</b> (the value stays). <b>Store</b> = write, <b>destructive</b> (old value overwritten).</li>
+      <li>Access time: 5–10 nanoseconds for modern RAM.</li>
+      <li><b>MAR</b> (memory address register) holds the address. <b>MDR</b> (memory data register) holds the data coming out or going in.</li>
+      <li>A <b>decoder</b> turns the MAR into a signal to one cell. <b>1D</b>: one decoder picks the cell directly. <b>2D</b>: address split into row + column, with a decoder for each.</li>
+      <li>The <b>fetch/store controller</b> is the "traffic cop" that decides read vs. write.</li>
+    </ul>
+    <p><b>Cache</b>: small, fast, expensive memory inside the CPU. Works because of the <b>principle of locality</b>: values near recently used ones are likely to be used next. <b>Hit rate</b> = % of times the value is found in cache.</p>
+  </div>
+
+  <div class="lesson">
+    <h3>I/O and mass storage</h3>
+    <ul>
+      <li>RAM is <b>volatile</b> (lost without power). Mass storage is <b>nonvolatile</b>.</li>
+      <li><b>DASD</b> (direct access): jump straight to the data. Hard drives, SSDs, CDs/DVDs, flash.</li>
+      <li><b>SASD</b> (sequential access): must read from the start. Magnetic tape.</li>
+      <li>Disks: <b>tracks</b> (rings) split into <b>sectors</b> (unit of retrieval). Access time = <b>seek time</b> (move arm to track) + <b>latency</b> (wait for sector to spin under head) + <b>transfer time</b> (read it).</li>
+      <li>Both are far slower than RAM (micro/milliseconds vs nanoseconds).</li>
+      <li><b>I/O controller</b>: handles the slow device so the CPU can do other work. When done, it sends an <b>interrupt</b> to the CPU.</li>
+    </ul>
+  </div>
+
+  <div class="lesson">
+    <h3>ALU</h3>
+    <p>Has circuits for arithmetic (+ − × ÷) and logic/comparison (=, AND, OR, NOT), plus <b>registers</b> (tiny, very fast memory). The <b>data path</b> is registers → circuits → back to registers.</p>
+    <p>How does it pick the operation? Option 1: a decoder turns on only the needed circuit. <b>Option 2 (used in practice): run all circuits in parallel and let a multiplexer select the result you want</b>. Faster, costs more hardware.</p>
+  </div>
+
+  <div class="lesson">
+    <h3>Control unit</h3>
+    <ul>
+      <li>An instruction = <b>op code</b> (which operation) + <b>address field(s)</b> (which memory cells/registers).</li>
+      <li><b>Machine language</b>: binary instructions. <b>Instruction set</b>: all instructions a chip supports. Different processors have different sets.</li>
+      <li><b>RISC</b>: small, highly optimized instruction set, easier hardware. <b>CISC</b>: large set, one instruction does lots of work, complex hardware. Modern chips mix both.</li>
+      <li>Instruction types: <b>data transfer</b> (LOAD, STORE), <b>arithmetic</b> (ADD, also AND), <b>comparison</b> (COMPARE), <b>branch</b> (JUMP, JUMPLT…). Branches are how loops and ifs work.</li>
+      <li><b>PC</b> (program counter): address of the <b>next</b> instruction. <b>IR</b> (instruction register): the <b>current</b> instruction. <b>Instruction decoder</b>: reads the op code and signals the right helper circuits.</li>
+    </ul>
+  </div>
+
+  <div class="lesson">
+    <h3>Fetch / decode / execute (memorize these)</h3>
+    <p>Notation: <code>CON(A)</code> = contents of cell A. <code>A → B</code> = copy register A into B.</p>
+    <div class="tbl"><table>
+      <tr><th>Instruction</th><th>Steps</th></tr>
+      <tr><td><b>Fetch</b> (every instruction)</td><td class="mono">1. PC → MAR<br>2. FETCH<br>3. MDR → IR<br>4. PC + 1 → PC</td></tr>
+      <tr><td><b>Decode</b></td><td class="mono">1. IR<sub>op</sub> → instruction decoder</td></tr>
+      <tr><td>LOAD X<br><small>CON(X) → R</small></td><td class="mono">1. IR<sub>addr</sub> → MAR<br>2. FETCH<br>3. MDR → R</td></tr>
+      <tr><td>STORE X<br><small>R → CON(X)</small></td><td class="mono">1. IR<sub>addr</sub> → MAR<br>2. R → MDR<br>3. STORE</td></tr>
+      <tr><td>ADD X<br><small>R + CON(X) → R</small></td><td class="mono">1. IR<sub>addr</sub> → MAR<br>2. FETCH<br>3. MDR → ALU<br>4. R → ALU<br>5. ADD<br>6. ALU → R</td></tr>
+      <tr><td>JUMP X</td><td class="mono">1. IR<sub>addr</sub> → PC</td></tr>
+      <tr><td>COMPARE X</td><td class="mono">1. IR<sub>addr</sub> → MAR<br>2. FETCH<br>3. MDR → ALU<br>4. R → ALU<br>5. SUBTRACT (CON(X) − R), sets GT, EQ, LT</td></tr>
+      <tr><td>JUMPGT X</td><td class="mono">1. IF GT = 1 THEN IR<sub>addr</sub> → PC</td></tr>
+    </table></div>
+    <p>Pattern to remember: anything that <i>reads</i> memory starts <code>IRaddr → MAR, FETCH</code>, then uses MDR. STORE puts the data in MDR <i>before</i> the STORE signal. Jumps just overwrite PC.</p>
+    <p>COMPARE checks <b>CON(X) against R</b>: if CON(X) &gt; R then GT = 1, if equal EQ = 1, if less LT = 1.</p>
+  </div>
+
+  <div class="tool" id="sim">
+    <div class="row" style="justify-content:space-between"><h3 style="margin:0">Fetch–execute simulator</h3><span class="score">program: R = CON(5) + CON(6), store in 7</span></div>
+    <div class="regs" id="sim-regs"></div>
+    <div class="mem" id="sim-mem"></div>
+    <div class="stepmsg" id="sim-msg"></div>
+    <div class="row"><button class="btn" id="sim-step" type="button">Next step</button><button class="btn ghost" id="sim-reset" type="button">Reset</button></div>
+  </div>
+
+  <div class="lesson">
+    <h3>Non–Von Neumann architectures</h3>
+    <ul>
+      <li>Chips can't keep getting faster: signals limited by speed of light, gates can't get much closer, too much heat.</li>
+      <li><b>Von Neumann bottleneck</b>: a sequential (one-at-a-time) machine can't keep up with bigger problems.</li>
+      <li>Fix: <b>parallel processing</b>, many processors at once. Past: supercomputers. Present: multicore desktops, the cloud. Future: quantum computing.</li>
+      <li><b>MIMD</b> (multiple instruction, multiple data): independent processors, each with its own data, program, and speed.</li>
+      <li>MIMD varieties: special-purpose supercomputers · <b>cluster computing</b> (standard machines on a LAN/WAN) · <b>grid computing</b> (machines of different power across the Internet, e.g. SETI, BOINC at Berkeley).</li>
+      <li>Hot research area: <b>parallel algorithms</b>.</li>
+    </ul>
+  </div>
+
+  <div class="trap"><div class="lbl">Exam traps</div><ul>
+    <li>PC = <i>next</i> instruction's address. IR = <i>current</i> instruction itself.</li>
+    <li>The PC is incremented during <b>fetch</b>, before execute. That's why JUMP can simply overwrite it.</li>
+    <li>MAR holds an <i>address</i>; MDR holds <i>data</i>. MAR width decides max memory size; MDR width = cell size.</li>
+    <li>Fetch is nondestructive, store is destructive.</li>
+    <li>Tape = sequential (SASD). Disks and SSDs = direct (DASD).</li>
+  </ul></div>
+
+  <div class="quiz" data-ch="ch5"></div>
+</section>
+
+<!-- ============ CH6 ============ -->
+<section class="view" id="v-ch6" data-label="System software" hidden>
+  <div class="eyebrow">Chapter 6</div>
+  <h2>System Software and Virtual Machines</h2>
+  <div class="big"><b>Big idea:</b> a "naked" machine is miserable to use. <b>System software</b> (assemblers, loaders, the OS) hides the hardware and gives you a friendly <b>virtual machine</b>.</div>
+
+  <div class="lesson">
+    <h3>Naked machine vs virtual machine</h3>
+    <div class="tbl"><table>
+      <tr><th>Bare-metal (naked) machine</th><th>Virtual machine</th></tr>
+      <tr><td>1. Write program in binary</td><td>1. Write program in a high-level language with a text editor</td></tr>
+      <tr><td>2. Load instructions into memory one by one</td><td>2. Save it to a folder</td></tr>
+      <tr><td>3. Put start address in 0, push "go"</td><td>3. Translator converts it to binary</td></tr>
+      <tr><td>4. Read results from memory in binary</td><td>4. Scheduler loads and runs it</td></tr>
+      <tr><td></td><td>5. I/O system prints results</td></tr>
+    </table></div>
+    <p><b>System software</b>: programs that (1) manage the computer's resources and (2) act as the go-between for user and hardware. Parts: user interface, <b>language services</b> (support high-level languages), <b>memory managers</b> (give memory to programs), <b>information managers</b> (organize mass storage), <b>I/O systems</b>, <b>scheduler</b> (programs waiting to run), <b>utilities</b> (tools, libraries).</p>
+  </div>
+
+  <div class="lesson">
+    <h3>OS classifications</h3>
+    <ul>
+      <li><b>Multi-user</b>: 2+ users run programs at the same time.</li>
+      <li><b>Multiprocessing</b>: one program runs on more than one CPU.</li>
+      <li><b>Multitasking</b>: more than one program runs at once.</li>
+      <li><b>Multithreading</b>: different parts of <i>one</i> program run at once.</li>
+      <li><b>Real time</b>: responds instantly. DOS, Windows, UNIX are <i>not</i> real-time.</li>
+    </ul>
+  </div>
+
+  <div class="lesson">
+    <h3>Assembly language</h3>
+    <ul>
+      <li>Instructions map <b>one-to-one</b> to machine language.</li>
+      <li><b>Symbolic op codes</b> (LOAD instead of 0000) and <b>symbolic addresses</b> (labels like X instead of 1010).</li>
+      <li><b>Pseudo-ops</b>: commands to the <i>assembler</i>, not turned into machine instructions. <code>.BEGIN</code>, <code>.END</code>, <code>.DATA</code>.</li>
+      <li>Advantages over machine code: clarity, readability, maintainability, can be placed anywhere in memory.</li>
+      <li>High-level languages (Java, C++, Python) beat assembly: more powerful (one line → many machine instructions), user oriented, <b>not machine specific</b>, use natural language and math notation.</li>
+    </ul>
+<pre>NEXTSTEP:  LOAD   X     -- Put X into register R
+ label      op code  address   comment</pre>
+    <p>Label is optional. The assembler ignores comments.</p>
+    <p><b>The process:</b> source program (assembly) → <b>assembler</b> → object program (machine language) → <b>loader</b> puts it in memory → hardware runs it → results.</p>
+  </div>
+
+  <div class="lesson">
+    <h3>How the assembler translates</h3>
+    <ol>
+      <li>Convert symbolic op codes to binary: look them up in an <b>op code table</b> (sorted, so it can use <b>binary search</b>).</li>
+      <li>Convert symbolic labels to addresses: needs <b>two passes</b>.</li>
+      <li>Do the pseudo-op actions (.DATA → put the value in a memory cell).</li>
+      <li>Write the <b>object file</b>.</li>
+    </ol>
+    <p><b>Why two passes?</b> A label can be used before it's defined (e.g. <code>JUMP LOOP1END</code> near the top, with LOOP1END defined later). So:</p>
+    <ul>
+      <li><b>Pass 1</b>: walk through counting instructions with a <b>location counter</b>. Every label goes into the <b>symbol table</b> with its address.</li>
+      <li><b>Pass 2</b>: translate op codes, replace each label with its address from the symbol table, set up .DATA values, write the object file.</li>
+    </ul>
+    <details class="work" open><summary>Worked: build the symbol table</summary><div>
+<pre>        .BEGIN
+        LOAD  Y        -- location 0
+        ADD   THREE    -- location 1
+        STORE X        -- location 2
+        HALT           -- location 3
+X:      .DATA 0        -- location 4
+Y:      .DATA 5        -- location 5
+THREE:  .DATA 3        -- location 6
+        .END</pre>
+      <div class="tbl"><table><tr><th>Label</th><th>Address</th></tr><tr><td>X</td><td>4</td></tr><tr><td>Y</td><td>5</td></tr><tr><td>THREE</td><td>6</td></tr></table></div>
+      <p>This program computes x = y + 3. .BEGIN and .END take no memory; .DATA lines each take one cell. Data goes after the HALT so the machine never tries to run it as an instruction.</p>
+    </div></details>
+    <details class="work"><summary>Worked: the loop example from the slides</summary><div>
+<pre>input a and b          IN A
+                       IN B
+while a &gt; b do   LOOP1: LOAD A
+                       COMPARE B          -- set flags
+                       JUMPLT LOOP1END    -- exit if a &lt; b
+                       JUMPEQ LOOP1END    -- exit if a = b
+   print a             OUT A
+   a = a − 2           LOAD A
+                       SUBTRACT TWO
+                       STORE A
+                       JUMP LOOP1         -- back to the top
+                 LOOP1END: …
+A: .DATA 0   B: .DATA 0   TWO: .DATA 2</pre>
+      <p>The loop should stop when a is <i>not</i> greater than b, meaning a &lt; b or a = b. That's why there are two exit jumps. Learn the shape, because any while loop in assembly looks like this: a <b>label at the top</b>, <b>COMPARE + conditional jump(s) out</b>, the loop body, then an <b>unconditional JUMP back</b> to the label. Data lines go after the code.</p>
+      <p class="note">Strictly by Chapter 5's definition, COMPARE B compares CON(B) against R, so "a &lt; b" would set GT, not LT. The slide reads the flags as "a compared to b". If you're asked to write this code, follow the slide's version.</p>
+    </div></details>
+  </div>
+
+  <div class="lesson">
+    <h3>The operating system's 5 jobs</h3>
+    <div class="tbl"><table>
+      <tr><th>Nickname</th><th>Job</th></tr>
+      <tr><td>Receptionist</td><td><b>User interface</b>: take commands (text prompt or GUI), run the right program</td></tr>
+      <tr><td>Security guard</td><td><b>Access control</b>: usernames/passwords, superusers, encryption, authorization lists</td></tr>
+      <tr><td>Dispatcher</td><td><b>Program scheduling</b>: decide what runs</td></tr>
+      <tr><td>Efficiency expert</td><td><b>Resource allocation</b>: keep CPU busy (switch programs when one waits for I/O)</td></tr>
+      <tr><td>Traffic officer</td><td><b>Deadlock and error detection</b></td></tr>
+    </table></div>
+    <p><b>Access control list</b> for file GRADES: R = read, A = append, C = change, D = delete. Smith: R. Jones: RA. Adams: RAC. Doe: RACD.</p>
+    <p><b>Sharing the CPU:</b> programs are <b>Running</b>, <b>Ready</b> (waiting for CPU), or <b>Waiting</b> (for I/O). When the running program A asks for I/O, it moves to Waiting and a Ready program (B) starts running. When A's I/O finishes, A goes to Ready.</p>
+    <p><b>Deadlock</b>: programs each hold a resource the other needs, so nobody can continue. <b>Prevention</b>: if you can't get all the resources you need, release everything and try later. <b>Recovery</b>: e.g. if no acknowledgement arrives, send the message again.</p>
+  </div>
+
+  <div class="lesson">
+    <h3>OS generations</h3>
+    <div class="tbl"><table>
+      <tr><th>Gen</th><th>Years</th><th>Type</th><th>Key points</th></tr>
+      <tr><td>1st</td><td>1945–55</td><td>No OS</td><td>Programmers ran the machine by hand</td></tr>
+      <tr><td>2nd</td><td>1955–65</td><td><b>Batch</b></td><td>Operators collect a batch of jobs onto tape, run them as a group. First command language (<b>job control language</b>). Better utilization</td></tr>
+      <tr><td>3rd</td><td>1965–85</td><td><b>Multiprogrammed</b>, <b>time-sharing</b></td><td>Several programs in memory, switch on I/O. Security needed: privileged instructions, memory bounds. Time-sharing: interactive users, time slices, illusion of sole access. First PC OSes</td></tr>
+      <tr><td>4th</td><td>1985–now</td><td><b>Network</b> OS</td><td>Shared printers, servers, Internet. Client-server, GUIs, real-time and embedded systems</td></tr>
+      <tr><td>5th</td><td>future</td><td>Distributed</td><td>Multimedia interfaces, massively parallel, distributed (cloud) where you don't know where resources live</td></tr>
+    </table></div>
+    <p>Each generation fixed the previous one's weakness: batch fixed idle time between human-run jobs; multiprogramming fixed the CPU sitting idle during I/O; time-sharing fixed the lack of interaction; network OS added remote resources.</p>
+  </div>
+
+  <div class="trap"><div class="lbl">Exam traps</div><ul>
+    <li>Assembler = translates. Loader = places in memory and starts it. Different programs.</li>
+    <li>Pseudo-ops are <i>not</i> translated into machine instructions.</li>
+    <li>Pass 1 builds the symbol table; pass 2 does the actual translation.</li>
+    <li>Multitasking (many programs) vs multithreading (parts of one program) vs multiprocessing (one program, many CPUs).</li>
+    <li>Batch = 2nd gen. Time-sharing = 3rd gen. Network OS = 4th gen.</li>
+  </ul></div>
+
+  <div class="quiz" data-ch="ch6"></div>
+</section>
+
+<!-- ============ CH7 ============ -->
+<section class="view" id="v-ch7" data-label="Networks & cloud" hidden>
+  <div class="eyebrow">Chapter 7</div>
+  <h2>Computer Networks and Cloud Computing</h2>
+  <div class="big"><b>Big idea:</b> networks connect devices with wires or radio, and a <b>stack of protocol layers</b> turns raw bits on a wire into reliable app-to-app communication. The Internet is a network of networks.</div>
+
+  <div class="lesson">
+    <h3>Wired connections</h3>
+    <ul>
+      <li><b>Dial-up</b>: analog phone lines. A <b>modem</b> modulates a carrier wave. Up to <b>56 Kbps</b>. <b>Bandwidth</b> = capacity.</li>
+      <li><b>Broadband</b>: <b>≥ 25 Mbps</b>. Home speeds are <b>asymmetric</b> (download faster than upload).
+        <ul><li><b>DSL</b>: phone lines, digital signal on different frequencies than voice. 5–50 Mbps down, 1–5 up.</li><li><b>Cable modem</b>: cable TV lines. Up to ~100 Mbps down, 3–5 up.</li></ul></li>
+      <li><b>Ethernet</b> (1970s): 10 Mbps · <b>Fast Ethernet</b> (early 90s): 100 Mbps · <b>Gigabit Ethernet</b> (late 90s): 1,000 Mbps.</li>
+    </ul>
+    <p><b>Transmission time = bits ÷ speed.</b> 8,000,000 bits on 56 Kbps = 8,000,000 ÷ 56,000 ≈ 143 s ≈ <b>2.4 minutes</b>. On Ethernet (10 Mbps): 0.8 s. On Gigabit: 0.008 s.</p>
+  </div>
+
+  <div class="lesson">
+    <h3>Network types</h3>
+    <div class="tbl"><table>
+      <tr><th>Type</th><th>What</th><th>Details</th></tr>
+      <tr><td>Bluetooth (PAN)</td><td>Wireless, very short</td><td>Low power, 30–50 ft. Mice, cameras, games</td></tr>
+      <tr><td>WLAN</td><td>Wireless LAN</td><td>To a base station that's wired. 150–300 ft. <b>Wi-Fi</b>, IEEE <b>802.11</b>, hot spots</td></tr>
+      <tr><td>MAN</td><td>Metropolitan</td><td>Wireless network covering blocks or a city</td></tr>
+      <tr><td>WWAN</td><td>Wireless WAN</td><td>Cellular towers miles apart (4G: 50–500 Mbps). Blocked indoors, errors slow it, easy to intercept</td></tr>
+      <tr><td>LAN</td><td>Wired, close together</td><td>Same room/building/campus. <b>Privately owned</b>. Mixed OSes OK</td></tr>
+      <tr><td>WAN</td><td>Wired, far apart</td><td>Across states/countries. <b>Store-and-forward, packet-switched</b></td></tr>
+    </table></div>
+  </div>
+
+  <div class="lesson">
+    <h3>LANs</h3>
+    <p><b>Topology</b> = how computers are connected.</p>
+    <ul>
+      <li><b>Bus</b>: one shared line, devices take turns.</li>
+      <li><b>Ring</b>: messages go around the circle until they get back to the source.</li>
+      <li><b>Star</b>: everything goes through a central node that routes it.</li>
+    </ul>
+    <p>Ethernet is a bus. <b>Repeater</b> amplifies the signal over long cables. <b>Bridge</b> passes messages between segments only when needed. Modern Ethernet uses a <b>switch</b> in a wiring closet (the shared "bus" is inside the switch); wall jacks and wireless base stations plug into it.</p>
+  </div>
+
+  <div class="lesson">
+    <h3>WANs and the Internet</h3>
+    <ul>
+      <li>Messages are cut into <b>packets</b> that hop node to node (<b>store-and-forward</b>) until they arrive.</li>
+      <li>Routes are picked <b>dynamically</b> (A-B-C-D or A-E-F-D…), giving redundant paths, <b>fault tolerance</b>, and adapting to traffic.</li>
+      <li>The <b>Internet</b> = LANs + WANs joined by <b>routers</b>. <b>ISPs</b> give access, at local, regional, national, and international (<b>tier-1</b>) levels. <b>DNS</b> provides addresses.</li>
+    </ul>
+  </div>
+
+  <div class="lesson">
+    <h3>The protocol stack (TCP/IP)</h3>
+    <p>A <b>protocol</b> is a standard set of rules for communicating. The <b>Internet Society</b> makes the standards. Each layer uses the one below it. Bottom to top: <b>P</b>lease <b>D</b>o <b>N</b>ot <b>T</b>hrow <b>A</b>pples.</p>
+    <div class="tbl"><table>
+      <tr><th>#</th><th>Layer</th><th>Job</th><th>Creates</th></tr>
+      <tr><td>5</td><td><b>Application</b></td><td>Formatted data between programs. <b>HTTP</b>, URLs (protocol://host/page)</td><td>Useful services (web, email)</td></tr>
+      <tr><td>4</td><td><b>Transport</b></td><td>App-to-app delivery. <b>TCP</b> (reliable, in order) or UDP (fast, no guarantee). <b>Port numbers</b> pick the program</td><td>Program-to-program pipe</td></tr>
+      <tr><td>3</td><td><b>Network</b></td><td><b>IP</b>. <b>Addressing</b> (IP addresses, DNS) and <b>routing</b> across many nodes</td><td>Delivery across the whole network</td></tr>
+      <tr><td>2</td><td><b>Data Link</b></td><td>Reliable link between neighbors: error detection/correction, <b>framing</b>. 2a = <b>Medium Access Control</b>, 2b = <b>Logical Link Control</b> (ARQ)</td><td>Error-free message pipe</td></tr>
+      <tr><td>1</td><td><b>Physical</b></td><td>How bits travel on the wire/radio: what voltage = 1, how long a bit lasts, connector shape</td><td>Bit pipe</td></tr>
+    </table></div>
+
+    <p><b>Medium Access Control (contention-based, Ethernet):</b> listen until the line is free, transmit, if there's a <b>collision</b> wait a <b>random</b> time and try again. Advantage: no master node, so no bottleneck.</p>
+    <p><b>ARQ (automatic repeat request):</b> sender sends a packet and waits for an <b>ACK</b> or a timeout. ACK → send next. Timeout → resend. Receiver: no error → send ACK; error → send <b>nothing</b>.</p>
+    <p>A packet holds: start/end markers (<b>SOP</b>/<b>EOP</b>), a <b>sequence number</b> (e.g. 2 of 5), the data, and <b>error-checking bits</b>.</p>
+    <p><b>Addressing:</b> host name (human-friendly) → <b>DNS</b> → IP address (like 141.140.1.5). If your local DNS server doesn't know it, it asks remote servers.</p>
+    <p><b>Ports:</b> IP address = the building, port number = the room. Web/HTTP = <b>80</b>, HTTPS = 443, SMTP email = <b>25</b>, DNS = <b>42</b> on your slides.</p>
+    <p><b>Loading a web page:</b> browser reads the protocol, gets the host's IP from DNS, connects to <b>port 80</b>, sends a <b>GET</b> message, server replies with the page and closes the connection.</p>
+  </div>
+
+  <div class="trap"><div class="lbl">Slide vs real world</div><ul>
+    <li>Your slide lists DNS as port 42. In practice DNS uses port 53. For this exam, write what the slide says.</li>
+  </ul></div>
+
+  <div class="lesson">
+    <h3>Network services</h3>
+    <ul>
+      <li><b>Interpersonal communication</b>: email, bulletin board systems (BBS → forums, chat), texting.</li>
+      <li><b>Social networking</b>: grew out of BBS. Benefits: fast global communication, rich discussion, public forum. Pitfalls: posts follow you forever, cyberbullying, privacy.</li>
+      <li><b>Resource sharing</b>: print servers, file servers, <b>client/server</b> computing, distributed databases, groupware/wikis.</li>
+      <li><b>E-commerce</b>: early (direct deposit, ATMs, checkout scanners), now (online stores, bill pay, PayPal, eBay).</li>
+    </ul>
+    <p><b>Cloud computing</b>: replacing client/server. Your device is local, the server is off-site in a server farm. Lower costs. Built on <b>virtualization</b> (separating a service from the machine providing it). Types: infrastructure, platform/development, application.</p>
+  </div>
+
+  <div class="lesson">
+    <h3>Internet history</h3>
+    <div class="tbl"><table>
+      <tr><th>Year</th><th>Event</th></tr>
+      <tr><td>1962</td><td>Licklider's "Galactic Network" idea</td></tr>
+      <tr><td>1966</td><td><b>ARPANET</b> (funded by ARPA)</td></tr>
+      <tr><td>1972</td><td>Email</td></tr>
+      <tr><td>1970s–80s</td><td>Many separate networks (HEPNet, DECNet) → need for <b>internetworking</b>. <b>Gateway</b> = device translating between networks</td></tr>
+      <tr><td>middle years</td><td><b>TCP/IP</b> becomes the standard. Telnet, FTP</td></tr>
+      <tr><td>1984</td><td><b>NSFNet</b>: open to universities, government, libraries, schools (ARPANET was only for ARPA grant holders)</td></tr>
+      <tr><td>late 80s</td><td>Networks connect, ARPANET stops being separate</td></tr>
+      <tr><td>1995</td><td>NSFNet handed over to private providers</td></tr>
+      <tr><td>—</td><td><b>Tim Berners-Lee</b> at <b>CERN</b> creates the <b>World Wide Web</b> using <b>hypertext</b>. Protocols made public → rapid growth</td></tr>
+    </table></div>
+  </div>
+
+  <div class="trap"><div class="lbl">Exam traps</div><ul>
+    <li>Error-free pipe between neighbors = <b>Data Link</b>. Routing and IP addresses = <b>Network</b>. Ports and TCP = <b>Transport</b>.</li>
+    <li>In ARQ, a receiver that finds an error sends <i>nothing</i>. The sender's timeout causes the resend.</li>
+    <li>LAN = privately owned, close. WAN = long distance, packet-switched.</li>
+    <li>The Internet is a "WAN of WANs". The Web is something that runs <i>on</i> the Internet.</li>
+  </ul></div>
+
+  <div class="quiz" data-ch="ch7"></div>
+</section>
+
+<!-- ============ EXAM ============ -->
+<section class="view" id="v-exam" data-label="Practice exam" hidden>
+  <div class="eyebrow">Final check</div>
+  <h2>Practice exam</h2>
+  <p class="lead">25 questions drawn at random from all seven chapters. Answer them all, then grade. Every attempt gives you a new mix.</p>
+  <div class="quiz" id="examQuiz"></div>
+  <div class="row"><button class="btn" id="examGrade" type="button">Grade my exam</button><button class="btn ghost" id="examNew" type="button">New exam</button></div>
+  <div id="examResult" class="big" hidden></div>
+</section>
+
+</main>
+
+<script>
+const Q = {
+ch1:[
+ ["Which is the best definition of computer science according to the slides?",["The study of computers","The study of how to write programs","The study of algorithms, including their properties, hardware and linguistic realizations, and applications","The study of the uses of computers and software"],2,"The other three are the 'common misconceptions' listed on the slides."],
+ ["The instruction \"Go back and do it again\" violates which property of an algorithm?",["Unambiguous","Halts in finite time","Produces a result","Well-ordered"],0,"Do what again? The computing agent can't understand it without more detail, so it's ambiguous."],
+ ["An algorithm with \"Repeat steps 2–4 forever\" violates which property?",["Unambiguous","Effectively computable","Halts in a finite amount of time","Well-ordered"],2,"That's an infinite loop. It never halts."],
+ ["Which is NOT part of the formal definition of an algorithm?",["Well-ordered","Effectively computable","Written in a programming language","Produces a result"],2,"An algorithm can be written in English or pseudocode. The language doesn't matter."],
+ ["In Babbage's Analytical Engine, the 'mill' corresponds to the modern…",["Memory","Arithmetic/logic unit","Input/output","Control unit"],1,"Mill = ALU, Store = memory, Operator = processor, Output unit = I/O."],
+ ["Who proposed the stored program computer design?",["Charles Babbage","Herman Hollerith","John Von Neumann","Blaise Pascal"],2,"Von Neumann's design was built as EDVAC (1949). Nearly all modern computers use it."],
+ ["The first publicly known fully electronic computer was…",["Mark I","ENIAC","EDVAC","UNIVAC I"],1,"ENIAC, 1946. Mark I was electromechanical, EDVAC was stored-program, UNIVAC I was the first sold commercially."],
+ ["The second generation of computers (1957–1965) is defined by…",["Vacuum tubes","Integrated circuits","Transistors and magnetic cores","Microprocessors"],2,"Also the era of FORTRAN and COBOL."],
+ ["Herman Hollerith's punched-card company eventually became…",["Intel","IBM","Microsoft","Apple"],1,"His census machines led to the company that became IBM in 1924."],
+ ["In machine learning, what does the human provide?",["The rules","Data and a learning method","Only the output","Nothing"],1,"Traditional: human gives rules. ML: human gives data + learning method, computer learns patterns."],
+ ["17th-century calculators like the Pascaline lacked which feature?",["Representing numbers","Doing arithmetic","Memory and programmability","Gears"],2,"They could represent numbers and do arithmetic, but had no memory and weren't programmable."]
+],
+ch2:[
+ ["Why use pseudocode instead of natural language?",["It runs on a computer","It's structured and less ambiguous, but not as fussy as a programming language","It's shorter than code","It's required by compilers"],1,"Pseudocode sits between English (ambiguous, verbose) and code (fussy, cryptic)."],
+ ["The three basic sequential operations are…",["If, while, do","Computation, input, output","Load, store, add","Search, sort, match"],1,"Sequential = computation, input, output."],
+ ["What's the key difference between a while loop and a do/while loop?",["Do/while is faster","Do/while checks the condition at the end, so the body runs at least once","While loops can't be nested","There is none"],1,"While = pretest (could run 0 times). Do/while = posttest (at least once)."],
+ ["In the multiply-by-repeated-addition algorithm with a = 4, b = 3, how many times does the loop body run?",["2","3","4","12"],1,"The body runs b = 3 times, giving product 4 → 8 → 12."],
+ ["\"If (either a = 0 or b = 0) then set product to 0\" is what kind of operation?",["Sequential","Conditional","Iterative","Input"],1,"It asks a question and picks what to do next."],
+ ["A variable is…",["A loop condition","A named storage location that holds a data value","An output statement","A type of algorithm"],1,"Straight from the slides."],
+ ["Top-down design means…",["Writing code from the first line to the last","Breaking a problem into smaller subproblems and refining each one","Testing from the top of the program","Using only conditionals"],1,"Like the multiply example: 'Loop b times*' gets refined until every step is concrete."],
+ ["In sequential search, why does the loop need the condition (i ≤ n) as well as (Found = NO)?",["To make it faster","So it stops when the name isn't in the list instead of looping forever","To sort the list","It doesn't need it"],1,"Without it, a missing name causes an infinite loop (or reading past the list)."],
+ ["Which pseudocode line is iterative?",["Set the value of x to 0","Print the value of x","While (count < b) do","If x > 5 then"],2,"While = loop = iterative."]
+],
+ch3:[
+ ["Sequential search on n items: best, worst, and average comparisons are…",["1, n, n/2","1, n/2, n","n, n, n","1, lg n, n"],0,"Best: first item. Worst: last or missing. Average: n/2. All Θ(n)."],
+ ["How many comparisons does selection sort make on a list of 10 items?",["10","45","100","90"],1,"n(n−1)/2 = 10 × 9 / 2 = 45."],
+ ["Binary search requires that the list is…",["Short","Sorted","Unsorted","Made of numbers only"],1,"It throws away half the list each step, which only works if the data is in order."],
+ ["Binary search's worst case is…",["Θ(1)","Θ(lg n)","Θ(n)","Θ(n²)"],1,"You can only halve n about lg n times."],
+ ["Selection sort on [5, 1, 3, 9, 4]. What is the list after pass 2?",["[1, 3, 4, 5, 9]","[5, 1, 3, 4, 9]","[4, 1, 3, 5, 9]","[3, 1, 4, 5, 9]"],2,"Pass 1: 9↔4 → [5,1,3,4,9]. Pass 2: 5↔4 → [4,1,3,5,9]."],
+ ["Which data cleanup algorithm can use up to 2n space?",["Shuffle-left","Copy-over","Converging-pointers","Binary search"],1,"Copy-over builds a second list. Worst case (no zeros) it copies all n values."],
+ ["Shuffle-left's worst case time is…",["Θ(n)","Θ(lg n)","Θ(n²)","Θ(2ⁿ)"],2,"When every value is 0, it shifts n−1, then n−2… values."],
+ ["Order these from slowest-growing to fastest-growing:",["n, lg n, n², 2ⁿ","lg n, n, n², 2ⁿ","lg n, n², n, 2ⁿ","2ⁿ, n², n, lg n"],1,"lg n < n < n² < 2ⁿ."],
+ ["An intractable problem is one that…",["Has no solution","Has no known polynomially bounded solution","Is solved by binary search","Takes Θ(n) time"],1,"Examples: Hamiltonian circuit, traveling salesperson, bin packing, chess."],
+ ["Why do we use approximation algorithms?",["To get exact answers faster","To get a good-enough answer to intractable problems in reasonable time","To sort data","To avoid using loops"],1,"Example: bin packing with 'put the box in the first bin it fits'."],
+ ["Algorithm A does 0.0001n² work, B does 100n. For very large n…",["A is always better","B is better, because every n² function eventually passes every n function","They're always equal","It depends on the computer"],1,"They tie at n = 1,000,000. After that A gets worse fast."],
+ ["Pattern matching (forward march) worst case is…",["Θ(n)","Θ(m)","Θ(m × n)","Θ(lg n)"],2,"Pattern 'aab' in 'aaaa…': compare all m characters at each of ~n positions."],
+ ["The converging-pointers algorithm has worst-case time…",["Θ(n²) and uses 2n space","Θ(n) and no extra space","Θ(lg n)","Θ(n) and 2n space"],1,"Best of both. The tradeoff is that the data ends up in a different order."]
+],
+ch4:[
+ ["What is 1101₂ in decimal?",["11","13","14","9"],1,"8 + 4 + 0 + 1 = 13."],
+ ["What is 45 in binary?",["101101","110101","101011","100101"],0,"32 + 8 + 4 + 1 = 45 → 101101."],
+ ["What is −6 in 4-bit two's complement?",["1110","1001","1010","0110"],2,"6 = 0110 → flip = 1001 → +1 = 1010."],
+ ["What's the main problem with sign/magnitude notation?",["It can't store negatives","It has two representations of zero","It needs 16 bits","It's lossy"],1,"0000 = +0 and 1000 = −0."],
+ ["In 4-bit unsigned binary, 14 + 2 causes…",["A carry into bit 3","Arithmetic overflow","Underflow","Nothing, the answer is 16"],1,"4 bits only holds 0–15."],
+ ["ASCII uses ___ bits per character; Unicode uses at least ___.",["7; 8","8; 16","16; 32","8; 32"],1,"Per the slides: ASCII 8-bit, Unicode minimum 16-bit."],
+ ["Sound quality when digitizing depends on…",["Amplitude and period","Sampling rate and bit depth","Pixels and RGB","Frequency only"],1,"More samples/second = more accurate wave. More bits/sample = more accurate amplitude."],
+ ["How many bytes does a 640 × 480 image with 24-bit RGB color take (no compression)?",["307,200","614,400","921,600","7,372,800"],2,"307,200 pixels × 3 bytes = 921,600 bytes (7,372,800 bits)."],
+ ["Compression where the original can be perfectly restored is…",["Lossy","Lossless","Variable","Raster"],1,"Lossless = perfect restore. Lossy = some info lost."],
+ ["If a = 1 and b = 0, what is (a AND b) OR (NOT b)?",["0","1"],1,"(1·0) = 0. NOT 0 = 1. 0 + 1 = 1."],
+ ["The 1-bit compare-for-equality circuit's Boolean expression is…",["a + b","(a · b) + (~a · ~b)","(a · ~b) + (~a · b)","~(a · b)"],1,"Output is 1 on rows (0,0) and (1,1). Sum-of-products gives (~a·~b) + (a·b)."],
+ ["A multiplexer with 3 selector lines has how many input lines?",["3","6","8","9"],2,"2ᴺ = 2³ = 8 inputs, 1 output."],
+ ["A decoder with 4 input lines has how many output lines?",["4","8","16","1"],2,"2⁴ = 16 outputs. Only one is 1 at a time."],
+ ["Which gate needs the fewest transistors?",["AND","OR","NOT","NAND"],2,"NOT: 1. NAND/NOR: 2. AND/OR: 3."],
+ ["Why do computers use binary?",["It's easier for humans","Bistable (two-state) systems are reliable","It uses less memory than decimal","It was required by Von Neumann"],1,"Even a degraded signal still clearly reads as on or off."],
+ ["In the sum-of-products algorithm, which truth table rows do you build terms from?",["All rows","Rows where output is 0","Rows where output is 1","The first and last rows"],2,"One AND term per row with output 1, then OR them together."]
+],
+ch5:[
+ ["The four subsystems of the Von Neumann architecture are…",["CPU, RAM, disk, network","Memory, I/O, ALU, control unit","Registers, cache, RAM, ROM","Fetch, decode, execute, halt"],1,"ALU + control unit together = the CPU."],
+ ["If the MAR is 20 bits wide, the maximum memory size is…",["20 cells","400 cells","1,048,576 cells","65,536 cells"],2,"2²⁰ = 1,048,576."],
+ ["Which statement is true?",["Fetch is destructive","Store is nondestructive","Fetch is nondestructive and store is destructive","Both are destructive"],2,"Reading leaves the value. Writing overwrites the old value."],
+ ["Cache memory works because of…",["The Von Neumann bottleneck","The principle of locality","Two's complement","Parallel processing"],1,"Values near recently used values are likely to be used soon."],
+ ["The program counter (PC) holds…",["The current instruction","The address of the next instruction","The result of the ALU","The number of instructions run"],1,"The IR holds the current instruction itself."],
+ ["What is the first step of the fetch phase?",["FETCH","MDR → IR","PC → MAR","IRaddr → MAR"],2,"PC → MAR, FETCH, MDR → IR, PC + 1 → PC."],
+ ["The execute steps for LOAD X are…",["IRaddr → MAR, FETCH, MDR → R","IRaddr → MAR, R → MDR, STORE","IRaddr → PC","PC → MAR, FETCH, MDR → IR"],0,"Option B is STORE X, C is JUMP X, D is the fetch phase."],
+ ["The execute steps for STORE X are…",["IRaddr → MAR, FETCH, MDR → R","IRaddr → MAR, R → MDR, STORE","R → MAR, STORE","MDR → R, STORE"],1,"Put the address in MAR, the data in MDR, then STORE."],
+ ["RISC machines have…",["Large instruction sets with powerful instructions","Small, highly optimized instruction sets","No instruction set","Only branch instructions"],1,"CISC is the large-set one. Modern chips mix both."],
+ ["Magnetic tape is an example of…",["DASD","SASD","RAM","Cache"],1,"Sequential access: you must read from the start."],
+ ["Disk access time is made up of…",["Seek time + latency + transfer time","Fetch + store","Hit rate + miss rate","Bandwidth + latency"],0,"Move the arm, wait for the spin, read the data."],
+ ["When an I/O controller finishes, it tells the CPU by sending…",["A FETCH","An interrupt","A JUMP","An ACK"],1,"So the CPU can do other work while slow I/O happens."],
+ ["How does the ALU usually select which operation's result to use?",["It runs only one circuit at a time","It runs all circuits in parallel and a multiplexer picks the result","The programmer wires it","It uses the cache"],1,"Option 2 on the slides: faster, uses more hardware."],
+ ["After COMPARE X where CON(X) = 7 and R = 3, which flag is 1?",["LT","EQ","GT","None"],2,"COMPARE checks CON(X) against R. 7 > 3 → GT = 1."],
+ ["The Von Neumann bottleneck refers to…",["Slow disks","The inability of sequential, one-at-a-time machines to handle larger problems","Too little RAM","Network congestion"],1,"Fix: parallel processing (MIMD, clusters, grids)."],
+ ["Grid computing (like SETI@home) means…",["One supercomputer","Machines of varying power working together over the Internet","Standard machines on one LAN","A single multicore chip"],1,"Cluster = standard machines on LAN/WAN. Grid = varying machines over long distances."]
+],
+ch6:[
+ ["System software's job is to…",["Run games","Manage resources and act as a go-between for user and hardware, creating a virtual machine","Replace hardware","Only translate programs"],1,"It hides the naked machine."],
+ ["Assembly language instructions map to machine language…",["One-to-many","One-to-one","Many-to-one","Not at all"],1,"Each assembly instruction = one machine instruction. High-level languages are one-to-many."],
+ ["Which is a pseudo-op?",["LOAD","ADD","JUMP",".DATA"],3,"Pseudo-ops (.BEGIN, .END, .DATA) are instructions to the assembler, not machine instructions."],
+ ["Why does the assembler need two passes?",["To double-check for errors","Labels can be used before they're defined, so pass 1 must collect all label addresses first","To make the program faster","To load the program"],1,"Pass 1 builds the symbol table. Pass 2 translates."],
+ ["Program: .BEGIN / LOAD Y / ADD THREE / STORE X / HALT / X: .DATA 0 / Y: .DATA 5 / THREE: .DATA 3 / .END. What address does Y get?",["1","4","5","6"],2,"Instructions use 0–3, X = 4, Y = 5, THREE = 6. .BEGIN takes no space."],
+ ["Which program places the object program into memory and starts it?",["Assembler","Loader","Compiler","Scheduler"],1,"Assembler translates. Loader loads."],
+ ["The assembler finds binary op codes quickly by…",["Sequential search through a list","Binary search on a sorted op code table","Asking the OS","Hashing the label"],1,"The op code table is sorted, so binary search works."],
+ ["Which OS role is the 'traffic officer'?",["User interface","Security","Deadlock and error detection","Scheduling"],2,"Receptionist = UI, security guard = access, dispatcher = scheduling, efficiency expert = resource allocation."],
+ ["In the GRADES access control list, Jones has RA. Jones can…",["Only read","Read and append","Read, append, change","Do everything"],1,"R = read, A = append, C = change, D = delete."],
+ ["Allowing different parts of a single program to run at the same time is…",["Multitasking","Multiprocessing","Multithreading","Multi-user"],2,"Multitasking = many programs. Multiprocessing = one program, many CPUs."],
+ ["Batch operating systems belong to which generation?",["First","Second","Third","Fourth"],1,"1955–65. Time-sharing/multiprogrammed = 3rd, network OS = 4th."],
+ ["Program A is running and makes an I/O request. A moves to…",["Ready","Waiting","Running","Terminated"],1,"A waits for I/O, and a Ready program gets the CPU."],
+ ["Deadlock prevention on the slides says…",["Kill the oldest program","If you can't get all the resources you need, release everything and try again later","Restart the computer","Add more memory"],1,"Recovery example: if no acknowledgement, send the message again."],
+ ["Time-sharing systems give users…",["Batch processing","The illusion of sole access, using time slices","Network access","No security"],1,"Each program runs until it does I/O or its time slice runs out."]
+],
+ch7:[
+ ["How long does it take to send 8 million bits over a 56 Kbps dial-up line?",["0.8 seconds","4 seconds","About 2.4 minutes","About 1 hour"],2,"8,000,000 ÷ 56,000 ≈ 143 seconds ≈ 2.4 min."],
+ ["Broadband is defined on the slides as a transmission rate of at least…",["56 Kbps","1 Mbps","25 Mbps","1 Gbps"],2,"≥ 25 Mbps."],
+ ["Which is low power with a range of 30–50 feet?",["Wi-Fi","Bluetooth","4G","Ethernet"],1,"Wi-Fi/WLAN is 150–300 ft."],
+ ["In which topology are all messages sent to a central node?",["Bus","Ring","Star","Mesh"],2,"Bus = shared line, ring = circulate around."],
+ ["WANs typically use…",["One shared cable","Store-and-forward, packet-switched communication","Bluetooth","Ring topology only"],1,"Packets hop node to node with dynamic routing."],
+ ["Which layer creates an 'error-free message pipe' between neighbors and uses ARQ?",["Physical","Data Link","Network","Transport"],1,"Logical Link Control (layer 2b) uses ARQ."],
+ ["Which layer handles IP addressing and routing?",["Data Link","Network","Transport","Application"],1,"The Internet's network layer protocol is IP."],
+ ["Port numbers belong to which layer?",["Physical","Network","Transport","Application"],2,"Transport delivers to the right program. Web = port 80."],
+ ["DNS is used to…",["Encrypt data","Map host names to IP addresses","Route packets","Detect collisions"],1,"e.g. a host name → 141.140.1.5."],
+ ["In contention-based Medium Access Control, after a collision the node…",["Gives up","Waits a random amount of time and tries again","Sends to the master node","Switches to ring topology"],1,"Random wait so the two nodes don't collide again."],
+ ["In ARQ, if the receiver detects an error, it…",["Sends a NAK","Sends nothing","Fixes it itself","Sends an ACK"],1,"The sender's timeout triggers the resend."],
+ ["The protocol stack from bottom to top is…",["Application, Transport, Network, Data Link, Physical","Physical, Data Link, Network, Transport, Application","Physical, Network, Data Link, Transport, Application","Data Link, Physical, Network, Application, Transport"],1,"Please Do Not Throw Apples."],
+ ["Cloud computing relies on…",["Dial-up","Virtualization: separating a service from the entity providing it","Bluetooth","Batch processing"],1,"Types: infrastructure, platform/development, application."],
+ ["Who created the World Wide Web, and where?",["Licklider at ARPA","Tim Berners-Lee at CERN","Von Neumann at Penn","NSF in 1984"],1,"Using hypertext. Web protocols were made public, so it spread fast."],
+ ["NSFNet (1984) mattered because it…",["Invented email","Opened access to universities, government agencies, libraries, and schools","Created HTTP","Replaced TCP/IP"],1,"ARPANET was only for ARPA grant recipients. NSFNet went private in 1995."],
+ ["A web browser connects to which port on a web server (per the slides)?",["25","42","80","443"],2,"25 = SMTP, 42 = DNS (on the slides), 443 = HTTPS."]
+]
+};
+
+/* ---------- storage helpers ---------- */
+const store = {
+  get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},
+  set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+};
+let answers = store.get("c125-answers",{});
+
+/* ---------- tabs / routing ---------- */
+const views=[...document.querySelectorAll(".view")];
+const tabsEl=document.getElementById("tabs");
+const tabNums={plan:"",ch1:"1",ch2:"2",ch3:"3",ch4:"4",ch5:"5",ch6:"6",ch7:"7",exam:""};
+views.forEach(v=>{
+  const id=v.id.slice(2);
+  const b=document.createElement("button");
+  b.className="tab";b.type="button";b.setAttribute("role","tab");b.dataset.id=id;
+  b.innerHTML=(tabNums[id]?`<span class="n">${tabNums[id]}</span>`:"")+`<span>${v.dataset.label}</span>`;
+  b.onclick=()=>{location.hash=id};
+  tabsEl.appendChild(b);
+});
+function show(){
+  let id=(location.hash||"#plan").slice(1);
+  if(!document.getElementById("v-"+id)) id="plan";
+  views.forEach(v=>v.hidden=v.id!=="v-"+id);
+  tabsEl.querySelectorAll(".tab").forEach(t=>{
+    const on=t.dataset.id===id;t.setAttribute("aria-selected",on);
+    if(on) t.scrollIntoView({block:"nearest",inline:"nearest"});
+  });
+  window.scrollTo(0,0);
+}
+addEventListener("hashchange",show);
+
+/* ---------- chapter quizzes ---------- */
+function esc(s){return s.replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]))}
+function renderChapterQuiz(el){
+  const ch=el.dataset.ch, qs=Q[ch];
+  el.innerHTML=`<div class="qhead"><h3>Check yourself</h3><span class="score" id="sc-${ch}"></span></div>`;
+  qs.forEach((q,i)=>{
+    const key=ch+"-"+i;
+    const box=document.createElement("div");box.className="q";
+    box.innerHTML=`<div class="qt"><span class="qn">${i+1}.</span>${esc(q[0])}</div><div class="opts"></div>`;
+    const opts=box.querySelector(".opts");
+    q[1].forEach((o,j)=>{
+      const b=document.createElement("button");b.type="button";b.className="opt";b.textContent=o;
+      b.onclick=()=>{answers[key]=j;store.set("c125-answers",answers);paint()};
+      opts.appendChild(b);
+    });
+    const why=document.createElement("div");why.className="why";why.hidden=true;box.appendChild(why);
+    function paint(){
+      const a=answers[key];
+      if(a===undefined)return;
+      [...opts.children].forEach((b,j)=>{b.disabled=true;b.classList.toggle("right",j===q[2]);b.classList.toggle("wrong",j===a&&a!==q[2])});
+      why.hidden=false;why.className="why"+(a===q[2]?"":" bad");
+      why.textContent=(a===q[2]?"Correct. ":"Not quite. ")+q[3];
+      updateScore(ch);
+    }
+    paint();
+    el.appendChild(box);
+  });
+  const r=document.createElement("div");r.className="row";
+  const reset=document.createElement("button");reset.className="btn ghost";reset.type="button";reset.textContent="Clear my answers";
+  reset.onclick=()=>{qs.forEach((_,i)=>delete answers[ch+"-"+i]);store.set("c125-answers",answers);renderChapterQuiz(el);updateScore(ch)};
+  r.appendChild(reset);el.appendChild(r);
+  updateScore(ch);
+}
+function updateScore(ch){
+  const qs=Q[ch];let done=0,right=0;
+  qs.forEach((q,i)=>{const a=answers[ch+"-"+i];if(a!==undefined){done++;if(a===q[2])right++}});
+  const s=document.getElementById("sc-"+ch);if(s)s.textContent=`${right}/${done} right · ${qs.length-done} left`;
+  const tab=tabsEl.querySelector(`[data-id="${ch}"]`);
+  if(tab){const has=tab.querySelector(".dot");if(done===qs.length&&!has){const d=document.createElement("span");d.className="dot";d.title="Quiz done";tab.appendChild(d)}}
+}
+document.querySelectorAll(".quiz[data-ch]").forEach(renderChapterQuiz);
+
+/* ---------- practice exam ---------- */
+let exam=[];
+function newExam(){
+  const pool=[];Object.keys(Q).forEach(ch=>Q[ch].forEach((q,i)=>pool.push({ch,q})));
+  for(let i=pool.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[pool[i],pool[j]]=[pool[j],pool[i]]}
+  exam=pool.slice(0,25).map(x=>({...x,a:undefined}));
+  const el=document.getElementById("examQuiz");el.innerHTML="";
+  document.getElementById("examResult").hidden=true;
+  exam.forEach((x,i)=>{
+    const box=document.createElement("div");box.className="q";
+    box.innerHTML=`<div class="qt"><span class="qn">${i+1}. Ch${x.ch.slice(2)}</span>${esc(x.q[0])}</div><div class="opts"></div><div class="why" hidden></div>`;
+    const opts=box.querySelector(".opts");
+    x.q[1].forEach((o,j)=>{const b=document.createElement("button");b.type="button";b.className="opt";b.textContent=o;
+      b.onclick=()=>{x.a=j;[...opts.children].forEach((c,k)=>c.style.borderColor=k===j?"var(--accent)":"");[...opts.children].forEach((c,k)=>c.style.background=k===j?"var(--accent-soft)":"")};
+      opts.appendChild(b)});
+    x.box=box;el.appendChild(box);
+  });
+}
+function gradeExam(){
+  let right=0;const byCh={};
+  exam.forEach(x=>{
+    const opts=x.box.querySelector(".opts"),why=x.box.querySelector(".why");
+    [...opts.children].forEach((b,j)=>{b.disabled=true;b.style.borderColor="";b.style.background="";b.classList.toggle("right",j===x.q[2]);b.classList.toggle("wrong",j===x.a&&x.a!==x.q[2])});
+    const ok=x.a===x.q[2];if(ok)right++;else byCh[x.ch]=(byCh[x.ch]||0)+1;
+    why.hidden=false;why.className="why"+(ok?"":" bad");
+    why.textContent=(ok?"Correct. ":x.a===undefined?"Skipped. ":"Not quite. ")+x.q[3];
+  });
+  const pct=Math.round(right/exam.length*100);
+  const weak=Object.entries(byCh).sort((a,b)=>b[1]-a[1]).map(([c,n])=>`Chapter ${c.slice(2)} (${n} missed)`);
+  const r=document.getElementById("examResult");r.hidden=false;
+  r.innerHTML=`<b>${right} / ${exam.length} (${pct}%)</b><br>${weak.length?"Review: "+weak.join(", "):"Perfect. You're ready."}`;
+  r.scrollIntoView({behavior:"smooth",block:"center"});
+}
+document.getElementById("examGrade").onclick=gradeExam;
+document.getElementById("examNew").onclick=()=>{newExam();document.getElementById("v-exam").scrollIntoView()};
+newExam();
+
+/* ---------- binary drill ---------- */
+const bd={streak:0,cur:null};
+const pad=(s,n)=>s.padStart(n,"0");
+function bdNew(){
+  const t=Math.floor(Math.random()*4);let p;
+  if(t===0){const n=1+Math.floor(Math.random()*63);
+    const steps=[];let x=n;while(x>0){steps.push(`${x} ÷ 2 = ${Math.floor(x/2)} r ${x%2}`);x=Math.floor(x/2)}
+    p={q:`Convert <b>${n}</b> to binary.`,a:n.toString(2),norm:s=>s.replace(/^0+/,"")||"0",
+       how:`Divide by 2, read remainders bottom to top:<br><span class="mono">${steps.join("<br>")}</span><br>→ <b>${n.toString(2)}</b>`};}
+  else if(t===1){const n=1+Math.floor(Math.random()*63),b=n.toString(2);
+    const parts=[...b].map((d,i)=>d==="1"?2**(b.length-1-i):null).filter(v=>v!==null);
+    p={q:`Convert <b class="mono">${b}</b>₂ to decimal.`,a:String(n),norm:s=>String(parseInt(s,10)),how:`${parts.join(" + ")} = <b>${n}</b>`};}
+  else if(t===2){const n=1+Math.floor(Math.random()*8),pos=pad((n%16).toString(2),4);
+    const ans=pad(((16-n)%16).toString(2),4);
+    const flip=[...pos].map(c=>c==="1"?"0":"1").join("");
+    p={q:`Write <b>−${n}</b> in 4-bit two's complement.`,a:ans,norm:s=>s,
+       how:n===8?`−8 is the special case: +8 doesn't fit in 4-bit two's complement, but the pattern is <b>1000</b> (leftmost bit worth −8).`:`+${n} = ${pos} → flip = ${flip} → add 1 = <b>${ans}</b>`};}
+  else {const a=Math.floor(Math.random()*8),b=Math.floor(Math.random()*8);
+    p={q:`Add in 4-bit binary: <b class="mono">${pad(a.toString(2),4)} + ${pad(b.toString(2),4)}</b>`,a:pad((a+b).toString(2),4),norm:s=>pad(s,4),
+       how:`${a} + ${b} = ${a+b} → <b>${pad((a+b).toString(2),4)}</b>`};}
+  bd.cur=p;
+  document.getElementById("bd-prob").innerHTML=p.q;
+  document.getElementById("bd-fb").textContent="";document.getElementById("bd-fb").className="fb";
+  const i=document.getElementById("bd-in");i.value="";
+}
+document.getElementById("bd-form").addEventListener("submit",e=>{
+  e.preventDefault();const v=document.getElementById("bd-in").value.trim().replace(/\s/g,"");if(!v)return;
+  const p=bd.cur,fb=document.getElementById("bd-fb");
+  const ok=p.norm(v)===p.norm(p.a);
+  if(ok){bd.streak++;fb.className="fb ok";fb.innerHTML="Correct. "+p.how;setTimeout(bdNew,1600)}
+  else{bd.streak=0;fb.className="fb no";fb.innerHTML="Not quite. "+p.how}
+  document.getElementById("bd-streak").textContent="streak "+bd.streak;
+});
+document.getElementById("bd-skip").onclick=bdNew;
+bdNew();
+
+/* ---------- fetch-execute simulator ---------- */
+const PROG={0:["LOAD",5],1:["ADD",6],2:["STORE",7],3:["HALT",0],5:12,6:30,7:0};
+let S,steps,si;
+function fmt(v){return Array.isArray(v)?`${v[0]} ${v[0]==="HALT"?"":v[1]}`.trim():String(v)}
+function simReset(){
+  S={PC:0,MAR:"–",MDR:"–",IR:"–",R:0,ALU:"–",mem:{...PROG},hot:[],hotMem:null,halted:false};
+  for(const k in S.mem)S.mem[k]=Array.isArray(S.mem[k])?[...S.mem[k]]:S.mem[k];
+  steps=[];si=0;planInstr();
+  simMsg("Ready","Press Next step. The PC starts at 0, the address of the first instruction.");
+  simDraw();
+}
+function planInstr(){
+  steps=[
+    ["Fetch","PC → MAR",()=>{S.MAR=S.PC;return["MAR"]},"Copy the address of the next instruction into the MAR."],
+    ["Fetch","FETCH",()=>{S.MDR=S.mem[S.MAR];S.hotMem=S.MAR;return["MDR"]},"Memory reads the cell at the MAR's address into the MDR."],
+    ["Fetch","MDR → IR",()=>{S.IR=S.MDR;return["IR"]},"The instruction moves into the instruction register."],
+    ["Fetch","PC + 1 → PC",()=>{S.PC=S.PC+1;return["PC"]},"PC now points at the next instruction, before this one even runs."],
+    ["Decode","IRop → decoder",()=>{return["IR"]},null]
+  ];
+}
+function execSteps(){
+  const [op,x]=S.IR;
+  if(op==="LOAD")return[
+    ["Execute LOAD","IRaddr → MAR",()=>{S.MAR=x;return["MAR"]},`Address ${x} goes into the MAR.`],
+    ["Execute LOAD","FETCH",()=>{S.MDR=S.mem[x];S.hotMem=x;return["MDR"]},`Cell ${x} holds ${S.mem[x]}. It goes into the MDR.`],
+    ["Execute LOAD","MDR → R",()=>{S.R=S.MDR;return["R"]},`R now holds ${S.mem[x]}.`]];
+  if(op==="ADD")return[
+    ["Execute ADD","IRaddr → MAR",()=>{S.MAR=x;return["MAR"]},`Address ${x} goes into the MAR.`],
+    ["Execute ADD","FETCH",()=>{S.MDR=S.mem[x];S.hotMem=x;return["MDR"]},`Cell ${x} (${S.mem[x]}) is read into the MDR.`],
+    ["Execute ADD","MDR → ALU",()=>{S.ALU=`${S.MDR} + ?`;return["ALU"]},"One operand goes to the ALU."],
+    ["Execute ADD","R → ALU",()=>{S.ALU=`${S.MDR} + ${S.R}`;return["ALU"]},"The other operand comes from R."],
+    ["Execute ADD","ADD",()=>{S.ALU=S.MDR+S.R;return["ALU"]},"The multiplexer selects the adder circuit's output."],
+    ["Execute ADD","ALU → R",()=>{S.R=S.ALU;return["R"]},`R now holds the sum.`]];
+  if(op==="STORE")return[
+    ["Execute STORE","IRaddr → MAR",()=>{S.MAR=x;return["MAR"]},`Address ${x} goes into the MAR.`],
+    ["Execute STORE","R → MDR",()=>{S.MDR=S.R;return["MDR"]},"The data to save goes into the MDR first."],
+    ["Execute STORE","STORE",()=>{S.mem[x]=S.MDR;S.hotMem=x;return[]},`Cell ${x} is overwritten with ${S.R}. Store is destructive.`]];
+  return [["Execute HALT","stop",()=>{S.halted=true;return[]},"The machine stops. Cell 7 holds 12 + 30 = 42. Press Reset to run it again."]];
+}
+function simStep(){
+  if(S.halted)return;
+  if(si>=steps.length){planInstr();si=0}
+  const st=steps[si];S.hotMem=null;
+  S.hot=st[2]();
+  let msg=st[3];
+  if(st[0]==="Decode"){msg=`The op code is ${S.IR[0]}, so the decoder activates the ${S.IR[0]} circuitry.`;steps=steps.concat(execSteps())}
+  si++;
+  simMsg(st[0],`<b class="mono">${st[1]}</b>: ${msg}`);
+  simDraw();
+}
+function simMsg(ph,t){document.getElementById("sim-msg").innerHTML=`<div class="ph">${ph}</div>${t}`}
+function simDraw(){
+  const regs=["PC","MAR","MDR","IR","R","ALU"];
+  document.getElementById("sim-regs").innerHTML=regs.map(r=>`<div class="reg${S.hot.includes(r)?" hot":""}"><small>${r}</small><span>${fmt(S[r])}</span></div>`).join("");
+  let m="";for(let a=0;a<8;a++){const v=S.mem[a];m+=`<div class="cell${S.hotMem===a?" hot":""}${S.PC===a&&!S.halted?" pc":""}"><i>${a}</i>${v===undefined?"":fmt(v)}</div>`}
+  document.getElementById("sim-mem").innerHTML=m;
+  document.getElementById("sim-step").disabled=S.halted;
+}
+document.getElementById("sim-step").onclick=simStep;
+document.getElementById("sim-reset").onclick=simReset;
+simReset();
+
+show();
+</script>
+
+</body></html>
